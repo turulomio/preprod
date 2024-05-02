@@ -1,4 +1,5 @@
-from os import getuid, path, listdir, remove
+from os import getuid, path, listdir, remove, chdir as os_chdir, system  as os_system
+from shutil import copyfile as shutil_copyfile
 from subprocess import run
 from sys import exit
 _=str
@@ -34,7 +35,14 @@ def run_check(command):
         print(_("Exiting propred..."))
         exit(2)
 
+def system(command):
+    os_system(command)
 
+def chdir(directory):
+    os_chdir(directory)
+    
+def git_pull():
+    run_check("git pull")
 
 def insert_in_file(filename, line, text):
     pass
@@ -42,6 +50,9 @@ def insert_in_file(filename, line, text):
 
 def append_to_file(filename, text):
     pass
+
+def copyfile(from_,  to_):
+    shutil_copyfile(from_,  to_)
 
 def delete_line_in_file(filename, line):
     pass
@@ -77,9 +88,9 @@ def dictionary_project_actions():
     print(_("Reading repository from {0}").format(rp))
 
     for file_project in listdir(rp):
-        if file_project in ["commons"]:
+        if file_project in ["repository_commons.py", "__pycache__"]:
             continue
         r[file_project]=[]
-        for file_action in listdir(f"{rp}/{file_project}/"):
+        for file_action in listdir(f"{rp}{file_project}/"):
             r[file_project].append(file_action)
     return r

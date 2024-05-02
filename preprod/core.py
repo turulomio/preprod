@@ -10,6 +10,8 @@ _=str
 def main():
 
     parser=ArgumentParser(description=_("ProPre manager"))
+    parser.add_argument('--pretend', default=False, help=_("Prints action code without running it"),  action='store_true')
+
     parser.add_argument('project',nargs='?', default=None, help=_("Project identification"),  action='store')
     parser.add_argument('action',nargs='?', default=None, help=_("Project identification"),  action='store')
 
@@ -18,7 +20,6 @@ def main():
     
     commons.check_repository_path(verbose=True)
     repository_path=commons.repository_path()
-    commons_path=f"{repository_path}/commons"
     project_path=f"{repository_path}/{args.project}/"
     action_path=f"{project_path}/{args.action}"
 
@@ -45,13 +46,15 @@ import repository_commons
 
 {action_commands}
         """
-        print("________________________________")
-        print(commands)
-        print("________________________________")
+        if args.pretend:
+            print("________________________________")
+            print(commands)
+            print("________________________________")
+        else:
+            print(_("Executing project '{0}' and action '{1}'").format(args.project,  args.action))
+            exec(commands)
+            print(_("Executed project '{0}' and action '{1}'").format(args.project,  args.action))
 
-        print(_("Executing project '{0}' and action '{1}'").format(args.project,  args.action))
-        exec(commands)
-        exit(0)
 
 def create():
 
@@ -85,10 +88,19 @@ repository_commons.foo()
 
 def list():
 
-    parser=ArgumentParser(description=_("ProPre manager"))
-    parser.parse_args()
+    parser=ArgumentParser(description=_("ProPre manager"))    
+    parser.add_argument('--repository_commons', default=False, help=_("Shows repository_commons.py file in repository pathh"),  action='store_true')
+
+    args=parser.parse_args()
     
     commons.check_repository_path(verbose=True)
+    rp=commons.repository_path()
+
+    if args.repository_commons:
+        with open(f"{rp}/repository_commons.py", "r") as f:
+            print(f.read())
+            exit(0)
+        
 
     for key, value in commons.dictionary_project_actions().items():
         print(key, value)
