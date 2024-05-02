@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 from argparse import ArgumentParser
-from os import path
+from os import path, makedirs
 from preprod import commons
 from sys import exit
 
@@ -36,18 +36,12 @@ def main():
             action_commands=f.read()
 
 
-        repository_commons_commands=""
-        print(commons_path,  path.exists(commons_path))
-
-        if path.exists(commons_path):
-            with open(commons_path) as f:
-                repository_commons_commands=f.read()
-
-
-
         commands=f"""
-from preprod import commons
-{repository_commons_commands}
+from preprod import commons as preprod_commons
+import sys
+sys.path.append("{repository_path}")
+import repository_commons
+
 
 {action_commands}
         """
@@ -66,8 +60,28 @@ def create():
     
     if commons.check_repository_path():
         print(_("Repository already created in {}").format(commons.repository_path()))
-        
-    print ("TODO")
+        exit(6)
+    rp=commons.repository_path()
+    
+    makedirs(f"{rp}/foo/")
+    
+    
+    
+    with open(f"{rp}/repository_commons.py", "w") as f:
+        f.write("""def foo():
+    print("This is the ouput of foo_function in repostory commons")
+""")
+    
+    
+    with open(f"{rp}/foo/start", "w") as f:
+        f.write("""print("This is foo project and start action")
+if preprod_commons.is_root():
+    print("I'm root")
+else:
+    print("I'm a normal user")
+repository_commons.foo()
+
+""")
 
 def list():
 

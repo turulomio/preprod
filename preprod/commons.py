@@ -1,4 +1,5 @@
-from os import getuid, path, listdir
+from os import getuid, path, listdir, remove
+from subprocess import run
 from sys import exit
 _=str
 
@@ -9,8 +10,30 @@ def press_a_key_to_continue():
 def nmcli_net_change(netname):
     pass
 
-def replace_in_file(file, search, replace):
-    pass
+def replace_in_file(filename, s, r):
+    data=open(filename,"r").read()
+    remove(filename)
+    data=data.replace(s,r)
+    f=open(filename, "w")
+    f.write(data)
+    f.close()
+
+def lines_at_the_end_of_file(filename, s):
+    f = open(filename, 'a')
+    f.write(s)
+    f.close()
+
+def run_check(command):
+    p=run(command, shell=True, capture_output=True);
+    if p.returncode!=0:
+        print(f"Error en comando. {command}")
+        print("STDOUT:")
+        print(p.stdout.decode('utf-8'))
+        print("STDERR:")
+        print(p.stderr.decode('utf-8'))
+        print(_("Exiting propred..."))
+        exit(2)
+
 
 
 def insert_in_file(filename, line, text):
