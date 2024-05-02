@@ -1,10 +1,17 @@
 #!/usr/bin/python3
 from argparse import ArgumentParser
+from gettext import translation
+from importlib.resources import files
 from os import path, makedirs
 from preprod import commons
 from sys import exit
 
-_=str
+
+try:
+    t=translation('preprod', files("preprod") / 'locale')
+    _=t.gettext
+except:
+    _=str
 
 
 def main():

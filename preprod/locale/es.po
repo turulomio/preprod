@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TooManyFiles\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-24 09:37+0100\n"
+"POT-Creation-Date: 2024-05-02 07:19+0100\n"
 "PO-Revision-Date: 2020-04-03 08:54+0200\n"
 "Last-Translator: trabajo <turulomio@yahoo.es>\n"
 "Language-Team: Spanish <kde-i18n-doc@kde.org>\n"
@@ -19,44 +19,79 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 19.12.3\n"
 
-msgid "A datetime with timezone is needed"
-msgstr "Se necesita una fecha y hora con zona horaria"
+msgid "Exiting propred..."
+msgstr "Saliendo de propred..."
 
-msgid "A datetime without timezone is needed"
-msgstr "Se necesita una fecha y hora sin zona horaria"
+msgid "You must create repository path"
+msgstr "Debe crear el directory del repositorio"
 
-msgid "You must set your lod in {}"
-msgstr "Debe establecer su lod en {}"
-
-msgid "This list of dictionaries hasn't data to print"
-msgstr "Esta lista de diccionarios no tiene datos para imprimir"
-
-msgid "Keys names are not correct in dictionary in lod_year_month_value_transposition function"
-msgstr "Los nombres de las llaves no son correctar en el diccionario de la función lod_year_month_value_transposition"
-
-msgid "Keys names are not correct in dictionary in lod_ymv_transposition function"
-msgstr "El nombre de las llaves no es correcto en el diccionario lod_ymv_transposition_function"
-
-msgid "I can't add a column with different size of lol"
-msgstr "No puedo añadir una columna con un tamaño diferente al lol"
-
-msgid "I can't add a row with different size of the first row of the lol"
+#, python-brace-format
+msgid "Reading repository from {0}"
 msgstr ""
 
-msgid "I can't remove positions from a None list"
-msgstr "No puedo borrar posiciones de una lista que es None"
-
-msgid "I can't traspaso a None object"
+msgid "ProPre manager"
 msgstr ""
 
-msgid "lol_print: This list of lists hasn't data to print"
-msgstr "lol_print: Esta lista de listas no tiene data para imprimir"
+msgid "Prints action code without running it"
+msgstr "Muestra el código de la acción sin ejecutarlo"
 
-msgid "lol_print: No data was printed due to you selected 0 rows"
-msgstr "lol_print: No se ha mostrado datos ya que has seleccionado 0 filas"
+msgid "Project identification"
+msgstr ""
 
-msgid "No data to show"
-msgstr "Sin datos que mostrar"
+#, python-brace-format
+msgid "Project wasn't found in {0}"
+msgstr ""
 
-msgid "This table continues in the next page"
-msgstr "Esta tabla continúa en la siguiente página"
+#, python-brace-format
+msgid "Action wasn't found in {0}"
+msgstr ""
+
+#, python-brace-format
+msgid "Executing project '{0}' and action '{1}'"
+msgstr ""
+
+#, python-brace-format
+msgid "Executed project '{0}' and action '{1}'"
+msgstr ""
+
+msgid "Repository already created in {}"
+msgstr ""
+
+msgid "Shows repository_commons.py file in repository pathh"
+msgstr ""
+
+#~ msgid "A datetime with timezone is needed"
+#~ msgstr "Se necesita una fecha y hora con zona horaria"
+
+#~ msgid "A datetime without timezone is needed"
+#~ msgstr "Se necesita una fecha y hora sin zona horaria"
+
+#~ msgid "You must set your lod in {}"
+#~ msgstr "Debe establecer su lod en {}"
+
+#~ msgid "This list of dictionaries hasn't data to print"
+#~ msgstr "Esta lista de diccionarios no tiene datos para imprimir"
+
+#~ msgid "Keys names are not correct in dictionary in lod_year_month_value_transposition function"
+#~ msgstr "Los nombres de las llaves no son correctar en el diccionario de la función lod_year_month_value_transposition"
+
+#~ msgid "Keys names are not correct in dictionary in lod_ymv_transposition function"
+#~ msgstr "El nombre de las llaves no es correcto en el diccionario lod_ymv_transposition_function"
+
+#~ msgid "I can't add a column with different size of lol"
+#~ msgstr "No puedo añadir una columna con un tamaño diferente al lol"
+
+#~ msgid "I can't remove positions from a None list"
+#~ msgstr "No puedo borrar posiciones de una lista que es None"
+
+#~ msgid "lol_print: This list of lists hasn't data to print"
+#~ msgstr "lol_print: Esta lista de listas no tiene data para imprimir"
+
+#~ msgid "lol_print: No data was printed due to you selected 0 rows"
+#~ msgstr "lol_print: No se ha mostrado datos ya que has seleccionado 0 filas"
+
+#~ msgid "No data to show"
+#~ msgstr "Sin datos que mostrar"
+
+#~ msgid "This table continues in the next page"
+#~ msgstr "Esta tabla continúa en la siguiente página"

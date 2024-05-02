@@ -1,8 +1,16 @@
+from gettext import translation
+from importlib.resources import files
 from os import getuid, path, listdir, remove, chdir as os_chdir, system  as os_system
 from shutil import copyfile as shutil_copyfile
 from subprocess import run
 from sys import exit
-_=str
+
+try:
+    t=translation('preprod', files("preprod") / 'locale')
+    _=t.gettext
+except:
+    _=str
+
 
 def press_a_key_to_continue():
     print("press a key to continue")
