@@ -1,3 +1,4 @@
+from colorama import Fore,  Style
 from gettext import translation
 from importlib.resources import files
 from os import getuid, path, listdir, remove, chdir as os_chdir, system  as os_system
@@ -11,6 +12,14 @@ try:
 except:
     _=str
 
+def red(s):
+        return Fore.RED + Style.BRIGHT + s + Style.RESET_ALL
+        
+def green(s):
+        return Fore.GREEN + Style.BRIGHT + s + Style.RESET_ALL
+
+def yellow(s):
+        return Fore.YELLOW+ Style.BRIGHT + s + Style.RESET_ALL
 
 def press_a_key_to_continue():
     print("press a key to continue")
@@ -32,16 +41,44 @@ def lines_at_the_end_of_file(filename, s):
     f.write(s)
     f.close()
 
-def run_check(command):
+def run_and_check(command,  expected_returncode=0,  expected_stdout=None, verbose=False,  description=None):
+    """
+        Executes a comand and returns a boolean if command was executed as expected
+        
+        Parameters:
+            - verbose. If true shows stdout and stderr
+    """
+    if description is None:
+        description=command
+        
+    print (f"  - {description} ",  endl="")
+    
+    
     p=run(command, shell=True, capture_output=True);
-    if p.returncode!=0:
+    
+    #Check if process is valid
+    r=False
+    if expected_stdout is not None:
+        print(expected_stdout, )
+        r= expected_stdout in p.stdout.decode('utf-8')
+        r=True
+    elif p.returncode==expected_returncode:
+        r=True
+    
+    if r is False and verbose is True:
         print(f"Error en comando. {command}")
         print("STDOUT:")
         print(p.stdout.decode('utf-8'))
         print("STDERR:")
         print(p.stderr.decode('utf-8'))
         print(_("Exiting propred..."))
-        exit(2)
+        
+    if r is True:
+        print (f"[{green('OK')}]")
+    else:
+        print (f"[{red('ERROR')}]")
+
+    return r
 
 def system(command):
     os_system(command)
@@ -50,7 +87,7 @@ def chdir(directory):
     os_chdir(directory)
     
 def git_pull():
-    run_check("git pull")
+    run_and_check("git pull")
 
 def insert_in_file(filename, line, text):
     pass
@@ -102,3 +139,4 @@ def dictionary_project_actions():
         for file_action in listdir(f"{rp}{file_project}/"):
             r[file_project].append(file_action)
     return r
+
