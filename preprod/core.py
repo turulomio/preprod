@@ -30,12 +30,12 @@ def main():
     project_path=f"{repository_path}/{args.project}/"
     action_path=f"{project_path}/{args.action}"
 
-    print(_("Reading repository from {0}").format(repository_path))
+    print(commons.yellow(_("Reading repository from {0}").format(repository_path)))
     if not (args.project and path.exists(project_path)):
-        print(_("Project wasn't found in {0}").format(project_path))
+        print(commons.red(_("Project wasn't found in {0}").format(project_path)))
         exit(5)
     if not (args.action and path.exists(action_path)):
-        print(_("Action wasn't found in {0}").format(action_path))
+        print(commons.red(_("Action wasn't found in {0}").format(action_path)))
         exit(5)
         
     if args.project is not None and args.action is not None:
@@ -58,9 +58,9 @@ import repository_commons
             print(commands)
             print("________________________________")
         else:
-            print(_("Executing project '{0}' and action '{1}'").format(args.project,  args.action))
+            print(commons.white(_("Executing project '{0}' and action '{1}'").format(args.project,  args.action)))
             exec(commands)
-            print(_("Executed project '{0}' and action '{1}'").format(args.project,  args.action))
+            print(commons.white(_("Executed project '{0}' and action '{1}'").format(args.project,  args.action)))
 
 
 def create():

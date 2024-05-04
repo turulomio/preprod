@@ -21,6 +21,9 @@ def green(s):
 def yellow(s):
         return Fore.YELLOW+ Style.BRIGHT + s + Style.RESET_ALL
 
+def white(s):
+        return Style.BRIGHT + s + Style.RESET_ALL
+
 def press_a_key_to_continue():
     print("press a key to continue")
 
@@ -51,7 +54,7 @@ def run_and_check(command,  expected_returncode=0,  expected_stdout=None, verbos
     if description is None:
         description=command
         
-    print (f"  - {description} ",  endl="")
+    print (f"  - {description} ",  end="")
     
     
     p=run(command, shell=True, capture_output=True);
