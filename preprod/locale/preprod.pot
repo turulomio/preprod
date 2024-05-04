@@ -1,0 +1,59 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-05-04 10:16+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Exiting propred..."
+msgstr ""
+
+msgid "You must create repository path"
+msgstr ""
+
+#, python-brace-format
+msgid "Reading repository from {0}"
+msgstr ""
+
+msgid "ProPre manager"
+msgstr ""
+
+msgid "Prints action code without running it"
+msgstr ""
+
+msgid "Project identification"
+msgstr ""
+
+#, python-brace-format
+msgid "Project wasn't found in {0}"
+msgstr ""
+
+#, python-brace-format
+msgid "Action wasn't found in {0}"
+msgstr ""
+
+#, python-brace-format
+msgid "Executing project '{0}' and action '{1}'"
+msgstr ""
+
+#, python-brace-format
+msgid "Executed project '{0}' and action '{1}'"
+msgstr ""
+
+msgid "Repository already created in {}"
+msgstr ""
+
+msgid "Shows repository_commons.py file in repository pathh"
+msgstr ""
