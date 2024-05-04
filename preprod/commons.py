@@ -25,7 +25,7 @@ def white(s):
         return Style.BRIGHT + s + Style.RESET_ALL
 
 def press_a_key_to_continue():
-    print("press a key to continue")
+    print("  * press a key to continue")
 
 
 def nmcli_net_change(netname):
@@ -90,7 +90,7 @@ def chdir(directory):
     os_chdir(directory)
     
 def git_pull():
-    run_and_check("git pull")
+    run_and_check("git pull", description="Pulling git repository")
 
 def insert_in_file(filename, line, text):
     pass
