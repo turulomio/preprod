@@ -4,7 +4,7 @@ from importlib.resources import files
 from os import getuid, path, listdir, remove, chdir as os_chdir, system  as os_system
 from shutil import copyfile as shutil_copyfile, rmtree as shutil_rmtree
 from subprocess import run
-from sys import exit
+from sys import exit, stdout
 
 try:
     t=translation('preprod', files("preprod") / 'locale')
@@ -50,12 +50,14 @@ def run_and_check(command,  description=None,  expected_returncode=0,  expected_
         
         Parameters:
             - verbose. If true shows stdout and stderr
+            - description. None makes not output, "" print command, else prints else
     """
-    if description is None:
-        description=command
+    if description is not None:
+        if description=="":
+            description=command
         
-    print (f"  - {description} ",  end="")
-    
+        print (f"  - {description} ",  end="")
+        stdout.flush()
     
     p=run(command, shell=True, capture_output=True);
     
@@ -76,21 +78,38 @@ def run_and_check(command,  description=None,  expected_returncode=0,  expected_
         print(p.stderr.decode('utf-8'))
         print(_("Exiting propred..."))
         
-    if r is True:
-        print (f"[{green('OK')}]")
-    else:
-        print (f"[{red('ERROR')}]")
-
+    if description is not None:
+        if r is True:
+            print (f"[{green('OK')}]")
+        else:
+            print (f"[{red('ERROR')}]")
     return r
+
+def print_before(s, show=True):
+    if show:
+        print (f"  - {s} ",  end="")
+        stdout.flush()
+
+def print_after_ok(show=True):
+    if show:
+        print (f"[{green('OK')}]")
+
+def print_after_error(show=True):
+    if show:
+        print (f"[{red('ERROR')}]")
 
 def system(command):
     os_system(command)
 
-def rmtree(directory):
+def rmtree(directory, show=True):
+    print_before(_("Deleting directory {0}").format(directory),show)
     shutil_rmtree(directory, ignore_errors=True)
+    print_after_ok(show)
     
-def chdir(directory):
+def chdir(directory, show=True):
+    print_before(_("Changing to directory {0}").format(directory),show)
     os_chdir(directory)
+    print_after_ok(show)
 
 def git_clone(url):
     run_and_check(f"git clone {url}", description=f"Cloning git repository {url}")

@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 from argparse import ArgumentParser
+from datetime import datetime
 from gettext import translation
 from importlib.resources import files
 from os import path, makedirs
@@ -39,7 +40,7 @@ def main():
         exit(5)
         
     if args.project is not None and args.action is not None:
-        
+        start=datetime.now()
         with open(action_path) as f:
             action_commands=f.read()
 
@@ -60,7 +61,7 @@ import repository_commons
         else:
             print(commons.white(_("Executing project '{0}' and action '{1}'").format(args.project,  args.action)))
             exec(commands)
-            print(commons.white(_("Executed project '{0}' and action '{1}'").format(args.project,  args.action)))
+            print(commons.white(_("Executed project '{0}' and action '{1}' took {2}").format(args.project,  args.action, datetime.now()-start)))
 
 
 def create():
