@@ -44,7 +44,7 @@ def lines_at_the_end_of_file(filename, s):
     f.write(s)
     f.close()
 
-def run_and_check(command,  expected_returncode=0,  expected_stdout=None, verbose=False,  description=None):
+def run_and_check(command,  description=None,  expected_returncode=0,  expected_stdout=None, verbose=True):
     """
         Executes a comand and returns a boolean if command was executed as expected
         
@@ -160,8 +160,13 @@ def create_python_virtual_env(python_version_name="python3.11", system_site_pack
         str_sss="--system-site-packages"
     
     
-    run_and_check(f"{python_version_name} -m venv {str_sss} .{python_version_name}", f"Creating virtual env at .python3.11")
+    run_and_check(f"{python_version_name} -m venv {str_sss} .{python_version_name}", description= f"Creating virtual env at .python3.11")
     return ".python3.11/bin/python3", ".python3.11/bin/pip"
 
 def apache_initd_restart():
-    run_and_check("/etc/init.d/apache restart", "Restarting apache server")
+    run_and_check("/etc/init.d/apache2 restart", "Restarting apache server")
+    
+
+def npm_install():
+    run_and_check("npm install")
+    
