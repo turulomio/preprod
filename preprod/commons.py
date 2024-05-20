@@ -31,13 +31,17 @@ def press_a_key_to_continue():
 def nmcli_net_change(netname):
     pass
 
-def replace_in_file(filename, s, r):
+def replace_in_file(filename, s, r,description=""):
+    if description is not None:
+        print_before(_("Replacing values in {0}").format(filename))
     data=open(filename,"r").read()
     remove(filename)
     data=data.replace(s,r)
     f=open(filename, "w")
     f.write(data)
     f.close()
+    if description is not None:
+        print_after_ok()
 
 def lines_at_the_end_of_file(filename, s):
     f = open(filename, 'a')
