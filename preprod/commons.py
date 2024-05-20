@@ -162,8 +162,6 @@ def dictionary_project_actions():
     r={}
     rp=repository_path()
 
-    print(_("Reading repository from {0}").format(rp))
-
     for file_project in listdir(rp):
         if file_project in ["repository_commons.py", "__pycache__"]:
             continue

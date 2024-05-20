@@ -30,6 +30,11 @@ def main():
     repository_path=commons.repository_path()
     project_path=f"{repository_path}/{args.project}/"
     action_path=f"{project_path}/{args.action}"
+    
+    if args.project is None and args.action is None:
+        list()
+        exit(10)
+    
 
     print(commons.yellow(_("Reading repository from {0}").format(repository_path)))
     if not (args.project and path.exists(project_path)):
@@ -103,6 +108,7 @@ def list():
     
     commons.check_repository_path(verbose=True)
     rp=commons.repository_path()
+    print(commons.yellow(_("Reading repository from {0} and listing available preprod scripts").format(rp)))
 
     if args.repository_commons:
         with open(f"{rp}/repository_commons.py", "r") as f:
@@ -111,4 +117,4 @@ def list():
         
 
     for key, value in commons.dictionary_project_actions().items():
-        print(key, value)
+        print(commons.white(key), commons.green(str(value)))

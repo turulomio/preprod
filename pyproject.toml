@@ -23,7 +23,6 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 preprod='preprod.core:main'
-preprod_list='preprod.core:list'
 preprod_create_repository='preprod.core:create'
 
 [tool.poe.tasks]
