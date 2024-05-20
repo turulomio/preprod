@@ -2,7 +2,7 @@ from colorama import Fore,  Style
 from gettext import translation
 from importlib.resources import files
 from os import getuid, path, listdir, remove, chdir as os_chdir, system  as os_system
-from shutil import copyfile as shutil_copyfile
+from shutil import copyfile as shutil_copyfile, rmtree as shutil_rmtree
 from subprocess import run
 from sys import exit
 
@@ -86,9 +86,15 @@ def run_and_check(command,  expected_returncode=0,  expected_stdout=None, verbos
 def system(command):
     os_system(command)
 
+def rmtree(directory):
+    shutil_rmtree(directory, ignore_errors=True)
+    
 def chdir(directory):
     os_chdir(directory)
-    
+
+def git_clone(url):
+    run_and_check(f"git clone {url}", description=f"Cloning git repository {url}")
+
 def git_pull():
     run_and_check("git pull", description="Pulling git repository")
 
@@ -143,3 +149,19 @@ def dictionary_project_actions():
             r[file_project].append(file_action)
     return r
 
+def create_python_virtual_env(python_version_name="python3.11", system_site_packages=False):
+    """
+        Will create a python virtual env in .python_version_name with python_version_name executable
+        Parameters:
+           - python_version_name: str: python3.11
+    """
+    str_sss=""
+    if system_site_packages:
+        str_sss="--system-site-packages"
+    
+    
+    run_and_check(f"{python_version_name} -m venv {str_sss} .{python_version_name}", f"Creating virtual env at .python3.11")
+    return ".python3.11/bin/python3", ".python3.11/bin/pip"
+
+def apache_initd_restart():
+    run_and_check("/etc/init.d/apache restart", "Restarting apache server")
