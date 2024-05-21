@@ -44,7 +44,7 @@ def nmcli_net_change(netname, check_host,  check_port, description=""):
             run(f"nmcli connection up {netname}", shell=True,  capture_output=True)
             for i in range(3):
                 try:
-                    with create_connection((check_host, check_port), timeout=1):
+                    with create_connection((check_host, check_port), timeout=1 ):
                         if description is not None:
                             print_after_ok()
                         return
