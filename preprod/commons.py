@@ -69,9 +69,13 @@ def replace_in_file(filename, s, r,description=""):
     if description is not None:
         print_after_ok()
 
-def lines_at_the_end_of_file(filename, s):
+def lines_at_the_end_of_file(filename, s, description=""):
+    if description is not None:
+        print_before(_("Appending text at the end of {0}").format(filename))
     with open(filename, 'a') as f:
         f.write(s)
+    if description is not None:
+        print_after_ok()
 
 def run_and_check(command,  description=None,  expected_returncode=0,  expected_stdout=None, verbose=True):
     """
@@ -175,14 +179,31 @@ def insert_at_line(file_path, line_number, text, description=""):
         print_after_ok()
 
 
-def append_to_file(filename, text):
-    pass
-
 def copyfile(from_,  to_):
     shutil_copyfile(from_,  to_)
 
-def delete_line_in_file(filename, line):
-    pass
+def delete_line_in_file(file_path, line_number, description=""):
+    if description is not None:
+        print_before(_("Deleting line {0} in {1}").format(line_number, file_path))
+
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+
+    # Adjust line number to zero-based index
+    line_number -= 1
+
+    if line_number < 0 or line_number >= len(lines):
+        raise IndexError(_("Line number is out of range"))
+
+    del lines[line_number]
+
+    with open(file_path, 'w') as file:
+        file.writelines(lines)
+
+    if description is not None:
+        print_after_ok()
+
+
 
 def is_root():
     """
