@@ -146,8 +146,33 @@ def git_clone(url):
 def git_pull():
     run_and_check("git pull", description="Pulling git repository")
 
-def insert_in_file(filename, line, text):
-    pass
+def insert_at_line(file_path, line_number, text, description=""):
+    """
+        Parameters
+          - line_number is the number of lines not a zero-based index
+          - text must be the content of a line without \n
+    """
+    if description is not None:
+        print_before(_("Insert text at line {0} in {1}").format(line_number, file_path))
+
+    with open(file_path, 'r') as f:
+        lines = f.readlines()
+
+    # Adjust line number to zero-based index
+    line_number -= 1
+
+    if line_number < 0 or line_number > len(lines):
+        if description is not None:
+            print_after_error()
+        raise IndexError(_("Line number is out of range"))
+
+    lines.insert(line_number, text + '\n')
+
+    with open(file_path, 'w') as file:
+        file.writelines(lines)
+
+    if description is not None:
+        print_after_ok()
 
 
 def append_to_file(filename, text):

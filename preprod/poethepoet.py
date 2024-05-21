@@ -7,12 +7,10 @@ def release():
   * Cambiar la versión y la fecha en __init__.py
   * Ejecutar otra vez poe release
   * git checkout -b preprod-{0}
-  * Modificar el Changelog en jupyter/changelog.md
   * poe translate
   * linguist
   * poe translate
   * poe test
-  * poe jupyter
   * git commit -a -m 'preprod-{0}'
   * git push
   * Hacer un pull request con los cambios a main
