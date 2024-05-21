@@ -2,3 +2,4 @@
 .eric7project/
 .jedi/
 __pycache__
+*.po~

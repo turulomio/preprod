@@ -5,6 +5,7 @@ def release():
     print("""Nueva versión:
   * Cambiar la version en pyproject.toml
   * Cambiar la versión y la fecha en __init__.py
+  * Editar README.md to add CHANGELOG
   * Ejecutar otra vez poe release
   * git checkout -b preprod-{0}
   * poe translate
@@ -12,7 +13,7 @@ def release():
   * poe translate
   * poe test
   * git commit -a -m 'preprod-{0}'
-  * git push
+  * git push --set-upstream origin preprod-{0}
   * Hacer un pull request con los cambios a main
   * Hacer un nuevo tag en GitHub
   * git checkout main

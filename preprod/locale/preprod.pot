@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-04 10:16+0200\n"
+"POT-Creation-Date: 2024-05-21 21:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,14 +17,44 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "Exiting propred..."
-msgstr ""
-
-msgid "You must create repository path"
+msgid "Press a key to continue..."
 msgstr ""
 
 #, python-brace-format
-msgid "Reading repository from {0}"
+msgid "Changing net to {0}"
+msgstr ""
+
+#, python-brace-format
+msgid "Replacing values in {0}"
+msgstr ""
+
+#, python-brace-format
+msgid "Appending text at the end of {0}"
+msgstr ""
+
+msgid "Exiting propred..."
+msgstr ""
+
+#, python-brace-format
+msgid "Deleting directory {0}"
+msgstr ""
+
+#, python-brace-format
+msgid "Changing to directory {0}"
+msgstr ""
+
+#, python-brace-format
+msgid "Insert text at line {0} in {1}"
+msgstr ""
+
+msgid "Line number is out of range"
+msgstr ""
+
+#, python-brace-format
+msgid "Deleting line {0} in {1}"
+msgstr ""
+
+msgid "You must create repository path"
 msgstr ""
 
 msgid "ProPre manager"
@@ -34,6 +64,10 @@ msgid "Prints action code without running it"
 msgstr ""
 
 msgid "Project identification"
+msgstr ""
+
+#, python-brace-format
+msgid "Reading repository from {0}"
 msgstr ""
 
 #, python-brace-format
@@ -49,11 +83,15 @@ msgid "Executing project '{0}' and action '{1}'"
 msgstr ""
 
 #, python-brace-format
-msgid "Executed project '{0}' and action '{1}'"
+msgid "Executed project '{0}' and action '{1}' took {2}"
 msgstr ""
 
 msgid "Repository already created in {}"
 msgstr ""
 
 msgid "Shows repository_commons.py file in repository pathh"
+msgstr ""
+
+#, python-brace-format
+msgid "Reading repository from {0} and listing available preprod scripts"
 msgstr ""
