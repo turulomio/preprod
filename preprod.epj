@@ -2,7 +2,7 @@
   "header": {
     "comment": "eric project file for project preprod",
     "copyright": "Copyright (C) 2024 , ",
-    "saved": "2024-05-01, 22:58:07"
+    "saved": "2024-05-21, 10:41:13"
   },
   "project": {
     "AUTHOR": "",
@@ -75,7 +75,8 @@
       "preprod/__init__.py",
       "preprod/commons.py",
       "preprod/core.py",
-      "preprod/poethepoet.py"
+      "preprod/poethepoet.py",
+      "preprod/tests/test_commons.py"
     ],
     "SOURCESDIR": "",
     "SPELLEXCLUDES": "",

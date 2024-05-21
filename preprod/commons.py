@@ -3,6 +3,7 @@ from gettext import translation
 from importlib.resources import files
 from os import getuid, path, listdir, remove, chdir as os_chdir, system  as os_system
 from shutil import copyfile as shutil_copyfile, rmtree as shutil_rmtree
+from socket import create_connection
 from subprocess import run
 from sys import exit, stdout
 
@@ -25,11 +26,36 @@ def white(s):
         return Style.BRIGHT + s + Style.RESET_ALL
 
 def press_a_key_to_continue():
-    print("  * press a key to continue")
+    system("read -p '{0}".format(_("Press a key to continue...")))
 
-
-def nmcli_net_change(netname):
-    pass
+def nmcli_net_change(netname, check_host,  check_port, description=""):
+    """
+        Parameters:
+            - netname with Networkmanager: str
+            - ip to check: str or name
+            - port to check: int
+            - description="" Default description. None doesn't print anything
+    """
+    if description is not None:
+        print_before(_("Changing net to {0}").format(netname) )
+    
+    retry=1
+    while True:
+            run(f"nmcli connection up {netname}", shell=True,  capture_output=True)
+            for i in range(3):
+                try:
+                    with create_connection((check_host, check_port), timeout=1):
+                        if description is not None:
+                            print_after_ok()
+                        return
+                except:
+                    if retry==1:
+                        print(" " * 12, end="")
+                        stdout.flush()
+                    s=f"[Retrying {retry}]"
+                    print("\b"*len(s)+ yellow(s),  end="")
+                    stdout.flush()
+                    retry+=1
 
 def replace_in_file(filename, s, r,description=""):
     if description is not None:
@@ -37,16 +63,15 @@ def replace_in_file(filename, s, r,description=""):
     data=open(filename,"r").read()
     remove(filename)
     data=data.replace(s,r)
-    f=open(filename, "w")
-    f.write(data)
-    f.close()
+    with open(filename, "w") as f:
+        f.write(data)
+    
     if description is not None:
         print_after_ok()
 
 def lines_at_the_end_of_file(filename, s):
-    f = open(filename, 'a')
-    f.write(s)
-    f.close()
+    with open(filename, 'a') as f:
+        f.write(s)
 
 def run_and_check(command,  description=None,  expected_returncode=0,  expected_stdout=None, verbose=True):
     """
@@ -63,7 +88,7 @@ def run_and_check(command,  description=None,  expected_returncode=0,  expected_
         print (f"  - {description} ",  end="")
         stdout.flush()
     
-    p=run(command, shell=True, capture_output=True);
+    p=run(command, shell=True, capture_output=True)
     
     #Check if process is valid
     r=False
@@ -181,7 +206,7 @@ def create_python_virtual_env(python_version_name="python3.11", system_site_pack
         str_sss="--system-site-packages"
     
     
-    run_and_check(f"{python_version_name} -m venv {str_sss} .{python_version_name}", description= f"Creating virtual env at .python3.11")
+    run_and_check(f"{python_version_name} -m venv {str_sss} .{python_version_name}", description= f"Creating virtual env at .{python_version_name}")
     return ".python3.11/bin/python3", ".python3.11/bin/pip"
 
 def apache_initd_restart():
