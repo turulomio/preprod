@@ -3,6 +3,7 @@ from argparse import ArgumentParser
 from datetime import datetime
 from gettext import translation
 from importlib.resources import files
+from multiprocessing import Lock
 from os import path, makedirs
 from preprod import commons
 from sys import exit
@@ -15,15 +16,36 @@ except:
     _=str
 
 
+def concurrent_log(title, stdout=None,  stderr=None):
+    def parse_std(std):
+        arr=std.split("\n")
+        r=""
+        for line in arr:
+            r+=f"      {line}\n"
+        return r
+    filename=f"/tmp/preprod_logs/{args.project}.log"
+    makedirs(path.dirname(filename), exist_ok=True)
+    with lock:
+        with open(filename, "a") as f:
+            f.write(commons.yellow(f"{datetime.now()} [{args.project}/{args.action}] {title}\n"))
+            if stdout!="" and stdout is not None:
+                f.write(commons.green("      STDOUT\n"))
+                f.write(parse_std(stdout))
+            if stderr!="" and stderr is not None:
+                f.write(commons.red("      STDERR\n"))
+                f.write(parse_std(stderr))
+            
 def main():
+    global lock
+    lock=Lock()
 
-    parser=ArgumentParser(description=_("ProPre manager"))
+    parser=ArgumentParser(description=_("ProPred manager"))
     parser.add_argument('--pretend', default=False, help=_("Prints action code without running it"),  action='store_true')
 
     parser.add_argument('project',nargs='?', default=None, help=_("Project identification"),  action='store')
-    parser.add_argument('action',nargs='?', default=None, help=_("Project identification"),  action='store')
+    parser.add_argument('action',nargs='?', default=None, help=_("Action identification"),  action='store')
 
-
+    global args
     args=parser.parse_args()
     
     commons.check_repository_path(verbose=True)

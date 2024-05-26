@@ -7,11 +7,15 @@ from socket import create_connection
 from subprocess import run
 from sys import exit, stdout
 
+
+
 try:
     t=translation('preprod', files("preprod") / 'locale')
     _=t.gettext
 except:
     _=str
+
+
 
 def red(s):
         return Fore.RED + Style.BRIGHT + s + Style.RESET_ALL
@@ -26,7 +30,10 @@ def white(s):
         return Style.BRIGHT + s + Style.RESET_ALL
 
 def press_a_key_to_continue():
-    system("read -p '{0}".format(_("Press a key to continue...")))
+    from preprod.core import concurrent_log
+    concurrent_log("Before press a key to continue...")
+    system("read -p '{0}'".format(_("Press a key to continue...")))
+    concurrent_log("After press a key to continue...")
 
 def nmcli_net_change(netname, check_host,  check_port, description=""):
     """
@@ -40,6 +47,8 @@ def nmcli_net_change(netname, check_host,  check_port, description=""):
         print_before(_("Changing net to {0}").format(netname) )
     
     retry=1
+    from preprod.core import concurrent_log
+    concurrent_log(f"Before changing net to {netname}")
     while True:
             run(f"nmcli connection up {netname}", shell=True,  capture_output=True)
             for i in range(3):
@@ -47,6 +56,7 @@ def nmcli_net_change(netname, check_host,  check_port, description=""):
                     with create_connection((check_host, check_port), timeout=1 ):
                         if description is not None:
                             print_after_ok()
+                        concurrent_log(f"After changing net to {netname}")
                         return
                 except:
                     if retry==1:
@@ -56,6 +66,7 @@ def nmcli_net_change(netname, check_host,  check_port, description=""):
                     print("\b"*len(s)+ yellow(s),  end="")
                     stdout.flush()
                     retry+=1
+
 
 def replace_in_file(filename, s, r,description=""):
     if description is not None:
@@ -68,6 +79,8 @@ def replace_in_file(filename, s, r,description=""):
     
     if description is not None:
         print_after_ok()
+    from preprod.core import concurrent_log
+    concurrent_log(f"Replaced in file '{filename}', '{s}' by '{r}'")
 
 def lines_at_the_end_of_file(filename, s, description=""):
     if description is not None:
@@ -76,8 +89,10 @@ def lines_at_the_end_of_file(filename, s, description=""):
         f.write(s)
     if description is not None:
         print_after_ok()
+    from preprod.core import concurrent_log
+    concurrent_log(f"Added at the of file '{filename}'", s)
 
-def run_and_check(command,  description=None,  expected_returncode=0,  expected_stdout=None, verbose=True):
+def run_and_check(command,  description=None,  expected_returncode=0,  expected_stdout=None):
     """
         Executes a comand and returns a boolean if command was executed as expected
         
@@ -103,19 +118,18 @@ def run_and_check(command,  description=None,  expected_returncode=0,  expected_
     elif p.returncode==expected_returncode:
         r=True
     
-    if r is False and verbose is True:
-        print(f"Error en comando. {command}")
-        print("STDOUT:")
-        print(p.stdout.decode('utf-8'))
-        print("STDERR:")
-        print(p.stderr.decode('utf-8'))
-        print(_("Exiting propred..."))
         
     if description is not None:
         if r is True:
             print (f"[{green('OK')}]")
         else:
             print (f"[{red('ERROR')}]")
+            
+    from preprod.core import concurrent_log
+    stdout_=p.stdout.decode('utf-8')
+    stderr_=p.stderr.decode('utf-8')
+    concurrent_log(f"run_and_check('{command}')",  stdout_, stderr_)
+
     return r
 
 def print_before(s, show=True):
@@ -132,15 +146,21 @@ def print_after_error(show=True):
         print (f"[{red('ERROR')}]")
 
 def system(command):
+    from preprod.core import concurrent_log
+    concurrent_log(f"system('{command}')")
     os_system(command)
 
 def rmtree(directory, show=True):
     print_before(_("Deleting directory {0}").format(directory),show)
     shutil_rmtree(directory, ignore_errors=True)
     print_after_ok(show)
+    from preprod.core import concurrent_log
+    concurrent_log(f"rmtree('{directory}')")
     
 def chdir(directory, show=True):
+    from preprod.core import concurrent_log
     print_before(_("Changing to directory {0}").format(directory),show)
+    concurrent_log(f"chdir('{directory}')")
     os_chdir(directory)
     print_after_ok(show)
 
@@ -177,10 +197,15 @@ def insert_at_line(file_path, line_number, text, description=""):
 
     if description is not None:
         print_after_ok()
+        
+    from preprod.core import concurrent_log
+    concurrent_log(f"insert_at_line('{file_path}', {line_number})", text)
 
 
 def copyfile(from_,  to_):
     shutil_copyfile(from_,  to_)
+    from preprod.core import concurrent_log
+    concurrent_log(f"copyfile('{from_}', '{to_}')")
 
 def delete_line_in_file(file_path, line_number, description=""):
     if description is not None:
@@ -194,6 +219,8 @@ def delete_line_in_file(file_path, line_number, description=""):
 
     if line_number < 0 or line_number >= len(lines):
         raise IndexError(_("Line number is out of range"))
+        
+    to_delete=lines[line_number]
 
     del lines[line_number]
 
@@ -202,6 +229,8 @@ def delete_line_in_file(file_path, line_number, description=""):
 
     if description is not None:
         print_after_ok()
+    from preprod.core import concurrent_log
+    concurrent_log(f"delete_line_in_file('{file_path}', {line_number})", None,  to_delete)
 
 
 
