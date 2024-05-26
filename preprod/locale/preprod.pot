@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-21 21:00+0200\n"
+"POT-Creation-Date: 2024-05-26 20:06+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,9 +30,6 @@ msgstr ""
 
 #, python-brace-format
 msgid "Appending text at the end of {0}"
-msgstr ""
-
-msgid "Exiting propred..."
 msgstr ""
 
 #, python-brace-format
@@ -57,13 +54,16 @@ msgstr ""
 msgid "You must create repository path"
 msgstr ""
 
-msgid "ProPre manager"
+msgid "ProPred manager"
 msgstr ""
 
 msgid "Prints action code without running it"
 msgstr ""
 
 msgid "Project identification"
+msgstr ""
+
+msgid "Action identification"
 msgstr ""
 
 #, python-brace-format
@@ -84,6 +84,9 @@ msgstr ""
 
 #, python-brace-format
 msgid "Executed project '{0}' and action '{1}' took {2}"
+msgstr ""
+
+msgid "ProPre manager"
 msgstr ""
 
 msgid "Repository already created in {}"
