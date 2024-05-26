@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TooManyFiles\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-21 20:58+0200\n"
+"POT-Creation-Date: 2024-05-26 20:05+0200\n"
 "PO-Revision-Date: 2020-04-03 08:54+0200\n"
 "Last-Translator: trabajo <turulomio@yahoo.es>\n"
 "Language-Team: Spanish <kde-i18n-doc@kde.org>\n"
@@ -34,9 +34,6 @@ msgstr "Remplazando valores en {0}"
 msgid "Appending text at the end of {0}"
 msgstr "Añadiendo texto al final de {0}"
 
-msgid "Exiting propred..."
-msgstr "Saliendo de propred..."
-
 #, python-brace-format
 msgid "Deleting directory {0}"
 msgstr "Borarando directorio {0}"
@@ -59,14 +56,17 @@ msgstr ""
 msgid "You must create repository path"
 msgstr "Debe crear el directory del repositorio"
 
-msgid "ProPre manager"
+msgid "ProPred manager"
 msgstr ""
 
 msgid "Prints action code without running it"
 msgstr "Muestra el código de la acción sin ejecutarlo"
 
 msgid "Project identification"
-msgstr ""
+msgstr "Identificación del proyecto"
+
+msgid "Action identification"
+msgstr "Identificación de la acción"
 
 #, python-brace-format
 msgid "Reading repository from {0}"
@@ -74,7 +74,7 @@ msgstr ""
 
 #, python-brace-format
 msgid "Project wasn't found in {0}"
-msgstr ""
+msgstr "El proyecto no fue encontrado en {0}"
 
 #, python-brace-format
 msgid "Action wasn't found in {0}"
@@ -88,8 +88,11 @@ msgstr ""
 msgid "Executed project '{0}' and action '{1}' took {2}"
 msgstr ""
 
-msgid "Repository already created in {}"
+msgid "ProPre manager"
 msgstr ""
+
+msgid "Repository already created in {}"
+msgstr "El repositorio ya está creado en {}"
 
 msgid "Shows repository_commons.py file in repository pathh"
 msgstr ""
@@ -98,3 +101,5 @@ msgstr ""
 msgid "Reading repository from {0} and listing available preprod scripts"
 msgstr ""
 
+#~ msgid "Exiting propred..."
+#~ msgstr "Saliendo de propred..."
