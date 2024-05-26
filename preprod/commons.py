@@ -79,6 +79,8 @@ def replace_in_file(filename, s, r,description=""):
     
     if description is not None:
         print_after_ok()
+    from preprod.core import concurrent_log
+    concurrent_log(f"Replaced in file '{filename}', '{s}' by '{r}'")
 
 def lines_at_the_end_of_file(filename, s, description=""):
     if description is not None:
@@ -87,6 +89,8 @@ def lines_at_the_end_of_file(filename, s, description=""):
         f.write(s)
     if description is not None:
         print_after_ok()
+    from preprod.core import concurrent_log
+    concurrent_log(f"Added at the of file '{filename}'", s)
 
 def run_and_check(command,  description=None,  expected_returncode=0,  expected_stdout=None):
     """
@@ -142,12 +146,16 @@ def print_after_error(show=True):
         print (f"[{red('ERROR')}]")
 
 def system(command):
+    from preprod.core import concurrent_log
+    concurrent_log(f"system('{command}')")
     os_system(command)
 
 def rmtree(directory, show=True):
     print_before(_("Deleting directory {0}").format(directory),show)
     shutil_rmtree(directory, ignore_errors=True)
     print_after_ok(show)
+    from preprod.core import concurrent_log
+    concurrent_log(f"rmtree('{directory}')")
     
 def chdir(directory, show=True):
     from preprod.core import concurrent_log
@@ -189,10 +197,15 @@ def insert_at_line(file_path, line_number, text, description=""):
 
     if description is not None:
         print_after_ok()
+        
+    from preprod.core import concurrent_log
+    concurrent_log(f"insert_at_line('{file_path}', {line_number})", text)
 
 
 def copyfile(from_,  to_):
     shutil_copyfile(from_,  to_)
+    from preprod.core import concurrent_log
+    concurrent_log(f"copyfile('{from_}', '{to_}')")
 
 def delete_line_in_file(file_path, line_number, description=""):
     if description is not None:
@@ -206,6 +219,8 @@ def delete_line_in_file(file_path, line_number, description=""):
 
     if line_number < 0 or line_number >= len(lines):
         raise IndexError(_("Line number is out of range"))
+        
+    to_delete=lines[line_number]
 
     del lines[line_number]
 
@@ -214,6 +229,8 @@ def delete_line_in_file(file_path, line_number, description=""):
 
     if description is not None:
         print_after_ok()
+    from preprod.core import concurrent_log
+    concurrent_log(f"delete_line_in_file('{file_path}', {line_number})", None,  to_delete)
 
 
 

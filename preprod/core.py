@@ -39,11 +39,11 @@ def main():
     global lock
     lock=Lock()
 
-    parser=ArgumentParser(description=_("ProPre manager"))
+    parser=ArgumentParser(description=_("ProPred manager"))
     parser.add_argument('--pretend', default=False, help=_("Prints action code without running it"),  action='store_true')
 
     parser.add_argument('project',nargs='?', default=None, help=_("Project identification"),  action='store')
-    parser.add_argument('action',nargs='?', default=None, help=_("Project identification"),  action='store')
+    parser.add_argument('action',nargs='?', default=None, help=_("Action identification"),  action='store')
 
     global args
     args=parser.parse_args()
