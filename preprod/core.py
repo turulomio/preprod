@@ -16,12 +16,24 @@ except:
     _=str
 
 
-def concurrent_log(s):
+def concurrent_log(title, stdout=None,  stderr=None):
+    def parse_std(std):
+        arr=std.split("\n")
+        r=""
+        for line in arr:
+            r+=f"      {line}\n"
+        return r
     filename=f"/tmp/preprod_logs/{args.project}.log"
     makedirs(path.dirname(filename), exist_ok=True)
     with lock:
-        with open(filename, "w") as f:
-            f.write(s)
+        with open(filename, "a") as f:
+            f.write(commons.yellow(f"{datetime.now()} [{args.project}/{args.action}] {title}\n"))
+            if stdout!="" and stdout is not None:
+                f.write(commons.green("      STDOUT\n"))
+                f.write(parse_std(stdout))
+            if stderr!="" and stderr is not None:
+                f.write(commons.red("      STDERR\n"))
+                f.write(parse_std(stderr))
             
 def main():
     global lock
