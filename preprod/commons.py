@@ -287,6 +287,13 @@ def create_python_virtual_env(python_version_name="python3.11", system_site_pack
 def apache_initd_restart():
     run_and_check("/etc/init.d/apache2 restart", "Restarting apache server")
     
+def chown_recursive(path,  user="root",  group="root"):
+    run_and_check(f"find {path} -type f -exec chown -R {user}:{group} {{}} +")
+
+def chmod_recursive(path,  directory_permissions="755",  file_permissions="644" ):
+    run_and_check(f"find {path} -type d -exec chmod -R {directory_permissions} {{}} +")
+    run_and_check(f"find {path} -type f -exec chmod -R {file_permissions} {{}} +")
+    
 
 def npm_install():
     run_and_check("npm install")
