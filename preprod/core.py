@@ -3,6 +3,7 @@ from argparse import ArgumentParser
 from datetime import datetime
 from gettext import translation
 from importlib.resources import files
+from multiprocessing import Lock
 from os import path, makedirs
 from preprod import commons
 from sys import exit
@@ -15,7 +16,16 @@ except:
     _=str
 
 
+def concurrent_log(s):
+    filename=f"/tmp/preprod_logs/{args.project}.log"
+    makedirs(path.dirname(filename), exist_ok=True)
+    with lock:
+        with open(filename, "w") as f:
+            f.write(s)
+            
 def main():
+    global lock
+    lock=Lock()
 
     parser=ArgumentParser(description=_("ProPre manager"))
     parser.add_argument('--pretend', default=False, help=_("Prints action code without running it"),  action='store_true')
@@ -23,7 +33,7 @@ def main():
     parser.add_argument('project',nargs='?', default=None, help=_("Project identification"),  action='store')
     parser.add_argument('action',nargs='?', default=None, help=_("Project identification"),  action='store')
 
-
+    global args
     args=parser.parse_args()
     
     commons.check_repository_path(verbose=True)

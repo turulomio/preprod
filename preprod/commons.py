@@ -7,11 +7,15 @@ from socket import create_connection
 from subprocess import run
 from sys import exit, stdout
 
+
+
 try:
     t=translation('preprod', files("preprod") / 'locale')
     _=t.gettext
 except:
     _=str
+
+
 
 def red(s):
         return Fore.RED + Style.BRIGHT + s + Style.RESET_ALL
@@ -140,7 +144,9 @@ def rmtree(directory, show=True):
     print_after_ok(show)
     
 def chdir(directory, show=True):
+    from preprod.core import concurrent_log
     print_before(_("Changing to directory {0}").format(directory),show)
+    concurrent_log(_("Calling command chdir to {0}").format(directory))
     os_chdir(directory)
     print_after_ok(show)
 
