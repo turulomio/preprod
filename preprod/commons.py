@@ -276,13 +276,9 @@ def create_python_virtual_env(python_version_name="python3.11", system_site_pack
         Parameters:
            - python_version_name: str: python3.11
     """
-    str_sss=""
-    if system_site_packages:
-        str_sss="--system-site-packages"
-    
-    
+    str_sss="--system-site-packages" if system_site_packages else ""
     run_and_check(f"{python_version_name} -m venv {str_sss} .{python_version_name}", description= f"Creating virtual env at .{python_version_name}")
-    return ".python3.11/bin/python3", ".python3.11/bin/pip"
+    return path.abspath(".python3.11/bin/python3"), path.abspath(".python3.11/bin/pip")
 
 def apache_initd_restart():
     run_and_check("/etc/init.d/apache2 restart", "Restarting apache server")
@@ -293,8 +289,17 @@ def chown_recursive(path,  user="root",  group="root"):
 def chmod_recursive(path,  directory_permissions="755",  file_permissions="644" ):
     run_and_check(f"find {path} -type d -exec chmod -R {directory_permissions} {{}} +")
     run_and_check(f"find {path} -type f -exec chmod -R {file_permissions} {{}} +")
-    
 
 def npm_install():
     run_and_check("npm install")
     
+def rsync(from_,  to_,  delete_after=False):
+    str_delete_after="--delete-after" if delete_after else ""
+    run_and_check(f"rsync -avzPH {from_} {to_} {str_delete_after}")
+    
+def poetry_install():
+    run_and_check("poetry install")
+    
+def poetry_env_info():
+    p=run("poetry env info -e", shell=True, capture_output=True)
+    return p.stdout.decode('utf-8')
