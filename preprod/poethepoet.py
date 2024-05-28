@@ -11,7 +11,7 @@ def release():
   * poe translate
   * linguist
   * poe translate
-  * poe test
+  * poe coverage
   * git commit -a -m 'preprod-{0}'
   * git push --set-upstream origin preprod-{0}
   * Hacer un pull request con los cambios a main
