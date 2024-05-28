@@ -7,6 +7,7 @@ from multiprocessing import Lock
 from os import path, makedirs
 from preprod import commons
 from sys import exit
+from preprod import __version__, __versiondate__
 
 
 try:
@@ -15,6 +16,9 @@ try:
 except:
     _=str
 
+
+def argparse_epilog():
+    return _("Developed by Mariano Muñoz 2023-{}").format(__versiondate__.year)
 
 def concurrent_log(title, stdout=None,  stderr=None):
     def parse_std(std):
@@ -39,7 +43,8 @@ def main():
     global lock
     lock=Lock()
 
-    parser=ArgumentParser(description=_("Preprod manager"))
+    parser=ArgumentParser(description=_("Preprod manager"), epilog= argparse_epilog())
+    parser.add_argument('--version', action='version', version=__version__)
     parser.add_argument('--pretend', default=False, help=_("Prints action code without running it"),  action='store_true')
 
     parser.add_argument('project',nargs='?', default=None, help=_("Project identification"),  action='store')
@@ -93,7 +98,8 @@ import repository_commons
 
 def create():
 
-    parser=ArgumentParser(description=_("Preprod manager"))
+    parser=ArgumentParser(description=_("Preprod manager"), epilog= argparse_epilog())
+    parser.add_argument('--version', action='version', version=__version__)
     parser.parse_args()
     
     if commons.check_repository_path():
