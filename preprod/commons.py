@@ -175,11 +175,13 @@ def chdir(directory, show=True):
     os_chdir(directory)
     print_after_ok(show)
 
-def git_clone(url):
-    run_and_check(f"git clone {url}", description=f"Cloning git repository {url}")
+def git_clone(url,  output_directory="", description=""):
+    description=_("Cloning git repository {0}").format(url) if description=="" else description
+    run_and_check(f"git clone {url} {output_directory}", description=description)
 
-def git_pull():
-    run_and_check("git pull", description="Pulling git repository")
+def git_pull(description=""):    
+    description=_("Pulling git repository") if description=="" else description
+    run_and_check("git pull", description=description)
 
 def insert_at_line(file_path, line_number, text, description=""):
     """
