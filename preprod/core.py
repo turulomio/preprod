@@ -35,20 +35,23 @@ def concurrent_log(title, stdout=None,  stderr=None):
             if stderr!="" and stderr is not None:
                 f.write(commons.red("      STDERR\n"))
                 f.write(parse_std(stderr))
-            
-def main():
+
+## If arguments is None, launches with sys.argc parameters. Entry point is toomanyfiles:main
+## You can call with main(['--pretend']). It's equivalento to os.system('program --pretend')
+## @param arguments is an array with parser arguments. For example: ['--argument','9'].
+def main(arguments=None):
     global lock
     lock=Lock()
-
+    
+    global args
     parser=ArgumentParser(description=_("Preprod manager"), epilog= argparse_epilog())
     parser.add_argument('--version', action='version', version=__version__)
     parser.add_argument('--pretend', default=False, help=_("Prints action code without running it"),  action='store_true')
 
-    parser.add_argument('project',nargs='?', default=None, help=_("Project identification"),  action='store')
-    parser.add_argument('action',nargs='?', default=None, help=_("Action identification"),  action='store')
+    parser.add_argument('project', nargs='?', default=None, help=_("Project identification"),  action='store')
+    parser.add_argument('action', nargs='?', default=None, help=_("Action identification"),  action='store')
 
-    global args
-    args=parser.parse_args()
+    args=parser.parse_args(arguments)
     
     commons.check_repository_path(verbose=True)
     repository_path=commons.repository_path()

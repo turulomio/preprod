@@ -27,7 +27,7 @@ def release():
 
     
 def coverage():
-    system("coverage run --omit='*uno.py' -m pytest && coverage report && coverage html")
+    system("coverage run --omit='*repository_commons.py' -m pytest && coverage report && coverage html")
 
 
 def translate():
@@ -37,4 +37,5 @@ def translate():
     system("msgfmt -cv -o preprod/locale/es/LC_MESSAGES/preprod.mo preprod/locale/es.po")
     system("msgfmt -cv -o preprod/locale/en/LC_MESSAGES/preprod.mo preprod/locale/en.po")
     
-
+def pytest():
+    system("pytest")
