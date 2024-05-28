@@ -1,12 +1,17 @@
 from colorama import Fore,  Style
 from gettext import translation
 from importlib.resources import files
-from os import getuid, path, listdir, remove, chdir as os_chdir, system  as os_system
+from os import getuid, path, listdir, remove, chdir as os_chdir, system  as os_system, makedirs as os_makedirs
 from shutil import copyfile as shutil_copyfile, rmtree as shutil_rmtree
 from socket import create_connection
 from subprocess import run
 from sys import exit, stdout
 
+"""
+    Each command should have these parameters
+    - description: (None: Doesn't show anything, "": Show default description, "something": "Shows something as description")
+
+"""
 
 
 try:
@@ -34,6 +39,20 @@ def press_a_key_to_continue():
     concurrent_log("Before press a key to continue...")
     system("read -p '{0}'".format(_("Press a key to continue...")))
     concurrent_log("After press a key to continue...")
+
+def makedirs(dirname, description=""):
+    """
+        Create directories to last child. If it's already created ignores error
+    """
+    from preprod.core import concurrent_log
+    log=_("Created {0} directory").format(dirname)
+    description=log if description=="" else description
+    print_before(description, description is not None)
+    os_makedirs(dirname,  exist_ok=True)
+    concurrent_log(log)
+    print_after_ok(description is not None)
+    
+
 
 def nmcli_net_change(netname, check_host,  check_port, description=""):
     """
@@ -69,43 +88,31 @@ def nmcli_net_change(netname, check_host,  check_port, description=""):
 
 
 def replace_in_file(filename, s, r,description=""):
-    if description is not None:
-        print_before(_("Replacing values in {0}").format(filename))
+    description=_("Replacing values in {0}").format(filename) if description=="" else description
+    print_before(description, description is not None)
     data=open(filename,"r").read()
     remove(filename)
     data=data.replace(s,r)
     with open(filename, "w") as f:
         f.write(data)
-    
-    if description is not None:
-        print_after_ok()
+    print_after_ok(description is not None)
     from preprod.core import concurrent_log
     concurrent_log(f"Replaced in file '{filename}', '{s}' by '{r}'")
 
 def lines_at_the_end_of_file(filename, s, description=""):
-    if description is not None:
-        print_before(_("Appending text at the end of {0}").format(filename))
+    print_before(_("Appending text at the end of {0}").format(filename), description is not None)
     with open(filename, 'a') as f:
         f.write(s)
-    if description is not None:
-        print_after_ok()
+    print_after_ok(description is not None)
     from preprod.core import concurrent_log
     concurrent_log(f"Added at the of file '{filename}'", s)
 
-def run_and_check(command,  description=None,  expected_returncode=0,  expected_stdout=None):
+def run_and_check(command,  description="",  expected_returncode=0,  expected_stdout=None):
     """
         Executes a comand and returns a boolean if command was executed as expected
-        
-        Parameters:
-            - verbose. If true shows stdout and stderr
-            - description. None makes not output, "" print command, else prints else
     """
-    if description is not None:
-        if description=="":
-            description=command
-        
-        print (f"  - {description} ",  end="")
-        stdout.flush()
+    description=_("Running '{0}'").format(command) if description=="" else description
+    print_before(description, description is not None)
     
     p=run(command, shell=True, capture_output=True)
     
@@ -118,12 +125,10 @@ def run_and_check(command,  description=None,  expected_returncode=0,  expected_
     elif p.returncode==expected_returncode:
         r=True
     
-        
-    if description is not None:
-        if r is True:
-            print (f"[{green('OK')}]")
-        else:
-            print (f"[{red('ERROR')}]")
+    if r is True:
+        print_after_ok(description is not None)
+    else:
+        print_after_error(description is not None)
             
     from preprod.core import concurrent_log
     stdout_=p.stdout.decode('utf-8')
@@ -145,9 +150,15 @@ def print_after_error(show=True):
     if show:
         print (f"[{red('ERROR')}]")
 
-def system(command):
+def system(command, description=""):
+    """
+        Runs a command with system
+    """
+    log=_("Running with system '{0}'").format(command) 
+    description=log if description=="" else description
+    print_before(description, description is not None)
     from preprod.core import concurrent_log
-    concurrent_log(f"system('{command}')")
+    concurrent_log(log)
     os_system(command)
 
 def rmtree(directory, show=True):
@@ -280,25 +291,28 @@ def create_python_virtual_env(python_version_name="python3.11", system_site_pack
     run_and_check(f"{python_version_name} -m venv {str_sss} .{python_version_name}", description= f"Creating virtual env at .{python_version_name}")
     return path.abspath(".python3.11/bin/python3"), path.abspath(".python3.11/bin/pip")
 
-def apache_initd_restart():
-    run_and_check("/etc/init.d/apache2 restart", "Restarting apache server")
+def apache_initd_restart(description=""):
+    description=_("Restarting apache server") if description=="" else description
+    run_and_check("/etc/init.d/apache2 restart", description)
     
-def chown_recursive(path,  user="root",  group="root"):
-    run_and_check(f"find {path} -type f -exec chown -R {user}:{group} {{}} +")
+def chown_recursive(path,  user="root",  group="root", description=""):
+    description=_("Changing '{0}' to owner {1}:{2}").format(path, user,  group) if description=="" else description
+    run_and_check(f"find {path} -type f -exec chown -R {user}:{group} {{}} +", description)
 
-def chmod_recursive(path,  directory_permissions="755",  file_permissions="644" ):
-    run_and_check(f"find {path} -type d -exec chmod -R {directory_permissions} {{}} +")
-    run_and_check(f"find {path} -type f -exec chmod -R {file_permissions} {{}} +")
+def chmod_recursive(path,  directory_permissions="755",  file_permissions="644",  description=""):
+    description=_("Changing directories permissions to {0} and files to {1}").format(directory_permissions, file_permissions) if description=="" else description
+    run_and_check(f"find {path} -type d -exec chmod -R {directory_permissions} {{}} +", None)
+    run_and_check(f"find {path} -type f -exec chmod -R {file_permissions} {{}} +", description)
 
-def npm_install():
-    run_and_check("npm install")
+def npm_install(description=""):
+    run_and_check("npm install", description)
     
-def rsync(from_,  to_,  delete_after=False):
+def rsync(from_,  to_,  delete_after=False, description=""):
     str_delete_after="--delete-after" if delete_after else ""
-    run_and_check(f"rsync -avzPH {from_} {to_} {str_delete_after}")
+    run_and_check(f"rsync -avzPH {from_} {to_} {str_delete_after}", description)
     
-def poetry_install():
-    run_and_check("poetry install")
+def poetry_install(description=""):
+    run_and_check("poetry install", description)
     
 def poetry_env_info():
     p=run("poetry env info -e", shell=True, capture_output=True)
