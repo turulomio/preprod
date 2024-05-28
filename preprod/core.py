@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 from argparse import ArgumentParser
 from datetime import datetime
 from gettext import translation
@@ -7,7 +6,7 @@ from multiprocessing import Lock
 from os import path, makedirs
 from preprod import commons
 from sys import exit
-
+from preprod import __version__, __versiondate__
 
 try:
     t=translation('preprod', files("preprod") / 'locale')
@@ -15,6 +14,8 @@ try:
 except:
     _=str
 
+def argparse_epilog():
+    return _("Developed by Mariano Muñoz 2023-{}").format(__versiondate__.year)
 
 def concurrent_log(title, stdout=None,  stderr=None):
     def parse_std(std):
@@ -39,7 +40,8 @@ def main():
     global lock
     lock=Lock()
 
-    parser=ArgumentParser(description=_("Preprod manager"))
+    parser=ArgumentParser(description=_("Preprod manager"), epilog= argparse_epilog())
+    parser.add_argument('--version', action='version', version=__version__)
     parser.add_argument('--pretend', default=False, help=_("Prints action code without running it"),  action='store_true')
 
     parser.add_argument('project',nargs='?', default=None, help=_("Project identification"),  action='store')
@@ -54,7 +56,7 @@ def main():
     action_path=f"{project_path}/{args.action}"
     
     if args.project is None and args.action is None:
-        list()
+        list_repository()
         exit(10)
     
 
@@ -93,7 +95,8 @@ import repository_commons
 
 def create():
 
-    parser=ArgumentParser(description=_("Preprod manager"))
+    parser=ArgumentParser(description=_("Preprod manager"), epilog= argparse_epilog())
+    parser.add_argument('--version', action='version', version=__version__)
     parser.parse_args()
     
     if commons.check_repository_path():
@@ -121,22 +124,14 @@ repository_commons.foo()
 
 """)
 
-def list():
-
-    parser=ArgumentParser(description=_("Preprod manager"))    
-    parser.add_argument('--repository_commons', default=False, help=_("Shows repository_commons.py file in repository pathh"),  action='store_true')
-
-    args=parser.parse_args()
-    
+def list_repository():
     commons.check_repository_path(verbose=True)
     rp=commons.repository_path()
     print(commons.yellow(_("Reading repository from {0} and listing available preprod scripts").format(rp)))
 
-    if args.repository_commons:
-        with open(f"{rp}/repository_commons.py", "r") as f:
-            print(f.read())
-            exit(0)
-        
+    dictionary_=commons.dictionary_project_actions()
+    ordered_values=list(dictionary_.keys())
+    ordered_values.sort()
 
-    for key, value in commons.dictionary_project_actions().items():
-        print(commons.white(key), commons.green(str(value)))
+    for key in ordered_values:
+        print(commons.white(key), commons.green(str(dictionary_[key])))
