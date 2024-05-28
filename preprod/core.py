@@ -39,7 +39,7 @@ def main():
     global lock
     lock=Lock()
 
-    parser=ArgumentParser(description=_("ProPred manager"))
+    parser=ArgumentParser(description=_("Preprod manager"))
     parser.add_argument('--pretend', default=False, help=_("Prints action code without running it"),  action='store_true')
 
     parser.add_argument('project',nargs='?', default=None, help=_("Project identification"),  action='store')
@@ -93,7 +93,7 @@ import repository_commons
 
 def create():
 
-    parser=ArgumentParser(description=_("ProPre manager"))
+    parser=ArgumentParser(description=_("Preprod manager"))
     parser.parse_args()
     
     if commons.check_repository_path():
@@ -123,7 +123,7 @@ repository_commons.foo()
 
 def list():
 
-    parser=ArgumentParser(description=_("ProPre manager"))    
+    parser=ArgumentParser(description=_("Preprod manager"))    
     parser.add_argument('--repository_commons', default=False, help=_("Shows repository_commons.py file in repository pathh"),  action='store_true')
 
     args=parser.parse_args()
