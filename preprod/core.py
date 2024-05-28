@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 from argparse import ArgumentParser
 from datetime import datetime
 from gettext import translation
@@ -9,13 +8,11 @@ from preprod import commons
 from sys import exit
 from preprod import __version__, __versiondate__
 
-
 try:
     t=translation('preprod', files("preprod") / 'locale')
     _=t.gettext
 except:
     _=str
-
 
 def argparse_epilog():
     return _("Developed by Mariano Muñoz 2023-{}").format(__versiondate__.year)
@@ -59,7 +56,7 @@ def main():
     action_path=f"{project_path}/{args.action}"
     
     if args.project is None and args.action is None:
-        list()
+        list_repository()
         exit(10)
     
 
@@ -127,7 +124,7 @@ repository_commons.foo()
 
 """)
 
-def list():
+def list_repository():
     commons.check_repository_path(verbose=True)
     rp=commons.repository_path()
     print(commons.yellow(_("Reading repository from {0} and listing available preprod scripts").format(rp)))
