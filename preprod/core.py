@@ -128,21 +128,13 @@ repository_commons.foo()
 """)
 
 def list():
-
-    parser=ArgumentParser(description=_("Preprod manager"))    
-    parser.add_argument('--repository_commons', default=False, help=_("Shows repository_commons.py file in repository pathh"),  action='store_true')
-
-    args=parser.parse_args()
-    
     commons.check_repository_path(verbose=True)
     rp=commons.repository_path()
     print(commons.yellow(_("Reading repository from {0} and listing available preprod scripts").format(rp)))
 
-    if args.repository_commons:
-        with open(f"{rp}/repository_commons.py", "r") as f:
-            print(f.read())
-            exit(0)
-        
+    dictionary_=commons.dictionary_project_actions()
+    ordered_values=list(dictionary_.keys())
+    ordered_values.sort()
 
-    for key, value in commons.dictionary_project_actions().items():
-        print(commons.white(key), commons.green(str(value)))
+    for key in ordered_values:
+        print(commons.white(key), commons.green(str(dictionary_[key])))
