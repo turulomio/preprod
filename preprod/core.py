@@ -7,6 +7,7 @@ from os import path, makedirs
 from preprod import commons
 from sys import exit
 from preprod import __version__, __versiondate__
+from getpass import getuser
 
 try:
     t=translation('preprod', files("preprod") / 'locale')
@@ -24,7 +25,7 @@ def concurrent_log(title, stdout=None,  stderr=None):
         for line in arr:
             r+=f"      {line}\n"
         return r
-    filename=f"/tmp/preprod_logs/{args.project}.log"
+    filename=f"/tmp/preprod_logs_{getuser()}/{args.project}.log"
     makedirs(path.dirname(filename), exist_ok=True)
     with lock:
         with open(filename, "a") as f:
