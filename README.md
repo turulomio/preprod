@@ -22,10 +22,10 @@ First we need to create our PreProd repository. As we said before you can create
 preprod_create_repository
 cd /home/your_user/.preprod
 mkdir calories_tracker
-nano calories_tracker/e2e_tests
+nano calories_tracker/build
 ```
 
-In calories_tracker/e2e_tests add the next code
+In calories_tracker/build add the next code
 
 ```python
 preprod_commons.chdir("/tmp")
