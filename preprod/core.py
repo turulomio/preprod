@@ -58,18 +58,25 @@ def main(arguments=None):
     repository_path=commons.repository_path()
     project_path=f"{repository_path}/{args.project}/"
     action_path=f"{project_path}/{args.action}"
+
     
+    # Checks for project and action parameters
     if args.project is None and args.action is None:
         list_repository()
         exit(10)
+        
+    print(commons.yellow(_("Reading repository from '{0}'").format(repository_path)))
+    if args.project is None or args.action is None:
+        print(commons.red(_("You need to set project and action parameters")))
+        exit(10)
     
 
-    print(commons.yellow(_("Reading repository from {0}").format(repository_path)))
-    if not (args.project and path.exists(project_path)):
-        print(commons.red(_("Project wasn't found in {0}").format(project_path)))
+    dpa=commons.dictionary_project_actions()
+    if not args.project in dpa: 
+        print(commons.red(_("Project '{0}' wasn't found en repository. Found projects: {1}").format(args.project, commons.green(str(list(dpa.keys()))))))
         exit(5)
-    if not (args.action and path.exists(action_path)):
-        print(commons.red(_("Action wasn't found in {0}").format(action_path)))
+    if not args.action in dpa[args.project]:
+        print(commons.red(_("Project '{0}' hasn't '{1}' action. Found actions: {2}").format(args.project,  args.action, commons.green(str(dpa[args.project])))))
         exit(5)
         
     if args.project is not None and args.action is not None:
@@ -83,11 +90,10 @@ from preprod import commons as preprod_commons
 import sys
 sys.path.append("{repository_path}")
 import repository_commons
-
-
 {action_commands}
-        """
+"""
         if args.pretend:
+            print(commons.white(_("Pretending project '{0}' and action '{1}':").format(args.project,  args.action)))
             print("________________________________")
             print(commands)
             print("________________________________")

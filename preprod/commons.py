@@ -23,18 +23,33 @@ except:
 
 
 def red(s):
-        return Fore.RED + Style.BRIGHT + s + Style.RESET_ALL
+    """
+        Prints string in red and bright color
+    """
+    return Fore.RED + Style.BRIGHT + s + Style.RESET_ALL
         
 def green(s):
-        return Fore.GREEN + Style.BRIGHT + s + Style.RESET_ALL
+    """
+        Prints string in green and bright color
+    """
+    return Fore.GREEN + Style.BRIGHT + s + Style.RESET_ALL
 
 def yellow(s):
-        return Fore.YELLOW+ Style.BRIGHT + s + Style.RESET_ALL
+    """
+        Prints string in yellow and bright color
+    """
+    return Fore.YELLOW+ Style.BRIGHT + s + Style.RESET_ALL
 
 def white(s):
-        return Style.BRIGHT + s + Style.RESET_ALL
+    """
+        Prints string in white and bright color
+    """
+    return Style.BRIGHT + s + Style.RESET_ALL
 
 def press_a_key_to_continue():
+    """
+        Waits until user press a key
+    """
     from preprod.core import concurrent_log
     concurrent_log("Before press a key to continue...")
     system("read -p '{0}'".format(_("Press a key to continue...")))
@@ -56,6 +71,8 @@ def makedirs(dirname, description=""):
 
 def nmcli_net_change(netname, check_host,  check_port, description=""):
     """
+        Uses nmcli to change a net and waits until can connect to check_host:check_port
+
         Parameters:
             - netname with Networkmanager: str
             - ip to check: str or name
@@ -88,6 +105,9 @@ def nmcli_net_change(netname, check_host,  check_port, description=""):
 
 
 def replace_in_file(filename, s, r,description=""):
+    """
+        Replaces a string for other in the whole file
+    """
     description=_("Replacing values in {0}").format(filename) if description=="" else description
     print_before(description, description is not None)
     data=open(filename,"r").read()
@@ -100,6 +120,9 @@ def replace_in_file(filename, s, r,description=""):
     concurrent_log(f"Replaced in file '{filename}', '{s}' by '{r}'")
 
 def lines_at_the_end_of_file(filename, s, description=""):
+    """
+        Appends a string (for lines append \n) to the end of the file
+    """
     print_before(_("Appending text at the end of {0}").format(filename), description is not None)
     with open(filename, 'a') as f:
         f.write(s)
@@ -162,6 +185,11 @@ def system(command, description=""):
     os_system(command)
 
 def rmtree(directory, show=True):
+    """
+        Deletes a directory recursively. It directory doesn't exist ignores error
+
+        Be careful
+    """
     print_before(_("Deleting directory {0}").format(directory),show)
     shutil_rmtree(directory, ignore_errors=True)
     print_after_ok(show)
@@ -169,6 +197,9 @@ def rmtree(directory, show=True):
     concurrent_log(f"rmtree('{directory}')")
     
 def chdir(directory, show=True):
+    """
+        Changes to a directory
+    """
     from preprod.core import concurrent_log
     print_before(_("Changing to directory {0}").format(directory),show)
     concurrent_log(f"chdir('{directory}')")
@@ -176,15 +207,24 @@ def chdir(directory, show=True):
     print_after_ok(show)
 
 def git_clone(url,  output_directory="", description=""):
+    """
+        Clones a git project using its url. If you need a different output directory you can set in params
+    """
+
     description=_("Cloning git repository {0}").format(url) if description=="" else description
     run_and_check(f"git clone {url} {output_directory}", description=description)
 
 def git_pull(description=""):    
+    """
+        Updates git repository using git pull command
+    """
     description=_("Pulling git repository") if description=="" else description
     run_and_check("git pull", description=description)
 
 def insert_at_line(file_path, line_number, text, description=""):
     """
+        Inserts a line using the number of the line
+
         Parameters
           - line_number is the number of lines not a zero-based index
           - text must be the content of a line without \n
@@ -216,11 +256,18 @@ def insert_at_line(file_path, line_number, text, description=""):
 
 
 def copyfile(from_,  to_):
+    """
+        Copies a file
+    """
     shutil_copyfile(from_,  to_)
     from preprod.core import concurrent_log
     concurrent_log(f"copyfile('{from_}', '{to_}')")
 
 def delete_line_in_file(file_path, line_number, description=""):
+
+    """
+        Deletes a line in a file
+    """
     if description is not None:
         print_before(_("Deleting line {0} in {1}").format(line_number, file_path))
 
@@ -263,6 +310,9 @@ def repository_path():
         return f"{path.expanduser('~')}/.preprod/"
         
 def check_repository_path(verbose=False):
+    """
+        Gets with a boolean if repository path exists
+    """
     if path.exists(repository_path()):
         return True
     else:
@@ -272,6 +322,9 @@ def check_repository_path(verbose=False):
         return False
         
 def dictionary_project_actions():
+    """
+        Returns a dictioanry with all projects and actions
+    """
     r={}
     rp=repository_path()
 
@@ -294,6 +347,9 @@ def create_python_virtual_env(python_version_name="python3.11", system_site_pack
     return path.abspath(".python3.11/bin/python3"), path.abspath(".python3.11/bin/pip")
 
 def apache_initd_restart(description=""):
+    """
+        Starts apache using init.d script
+    """
     description=_("Restarting apache server") if description=="" else description
     run_and_check("/etc/init.d/apache2 restart", description)
     
