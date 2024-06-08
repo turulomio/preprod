@@ -1,3 +1,4 @@
+```text
 Help on module preprod.commons in preprod:
 
 NAME
@@ -139,4 +140,5 @@ FILE
     /home/keko/Proyectos/preprod/preprod/commons.py
 
 
-None
+
+```
