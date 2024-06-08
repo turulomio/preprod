@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-28 19:16+0200\n"
+"POT-Creation-Date: 2024-06-08 11:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -100,15 +100,22 @@ msgid "Action identification"
 msgstr ""
 
 #, python-brace-format
-msgid "Reading repository from {0}"
+msgid "Reading repository from '{0}'"
+msgstr ""
+
+msgid "You need to set project and action parameters"
 msgstr ""
 
 #, python-brace-format
-msgid "Project wasn't found in {0}"
+msgid "Project '{0}' wasn't found en repository. Found projects: {1}"
 msgstr ""
 
 #, python-brace-format
-msgid "Action wasn't found in {0}"
+msgid "Project '{0}' hasn't '{1}' action. Found actions: {2}"
+msgstr ""
+
+#, python-brace-format
+msgid "Pretending project '{0}' and action '{1}':"
 msgstr ""
 
 #, python-brace-format

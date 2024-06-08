@@ -58,6 +58,12 @@ You can see all preprod_commons method  [here](doc/PREPROD_COMMANDS.md)
 
 ## Changelog
 
+### 0.4.0 (2024-06-08)
+- Temporal preprod logs are now created by each user to avoid permissions problems
+- Added examples and documentation
+- Added poe doc command
+- Improved parameters errors
+
 ### 0.3.0 (2024-05-28)
 - Improved description system
 - Added makedirs and git clone in different directory

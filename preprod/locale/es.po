@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TooManyFiles\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-28 19:16+0200\n"
+"POT-Creation-Date: 2024-06-08 11:10+0200\n"
 "PO-Revision-Date: 2020-04-03 08:54+0200\n"
 "Last-Translator: trabajo <turulomio@yahoo.es>\n"
 "Language-Team: Spanish <kde-i18n-doc@kde.org>\n"
@@ -56,10 +56,10 @@ msgstr "Cambiando a directorio {0}"
 
 #, python-brace-format
 msgid "Cloning git repository {0}"
-msgstr ""
+msgstr "Clonando repositorio git {0}"
 
 msgid "Pulling git repository"
-msgstr ""
+msgstr "Actualizando repositorio git"
 
 #, python-brace-format
 msgid "Insert text at line {0} in {1}"
@@ -70,7 +70,7 @@ msgstr "El número de línea está fuera de rango"
 
 #, python-brace-format
 msgid "Deleting line {0} in {1}"
-msgstr ""
+msgstr "Borrando línea {0} en {1}"
 
 msgid "You must create repository path"
 msgstr "Debe crear el directory del repositorio"
@@ -87,7 +87,7 @@ msgid "Changing directories permissions to {0} and files to {1}"
 msgstr ""
 
 msgid "Developed by Mariano Muñoz 2023-{}"
-msgstr ""
+msgstr "Desarrollado por Mariano Muñoz 2023-{}"
 
 msgid "Preprod manager"
 msgstr "Gestor Preprod"
@@ -102,16 +102,23 @@ msgid "Action identification"
 msgstr "Identificación de la acción"
 
 #, python-brace-format
-msgid "Reading repository from {0}"
-msgstr "Leyendo el repository de {0}"
+msgid "Reading repository from '{0}'"
+msgstr "Leyendo repositorio desde '{0}'"
+
+msgid "You need to set project and action parameters"
+msgstr "Necesitas establecer los parámatros del proyecto y de la acción"
 
 #, python-brace-format
-msgid "Project wasn't found in {0}"
-msgstr "El proyecto no fue encontrado en {0}"
+msgid "Project '{0}' wasn't found en repository. Found projects: {1}"
+msgstr "El proyecto '{0}' no fue encontrado en el repositorio. Proyectos encontrados: {1}"
 
 #, python-brace-format
-msgid "Action wasn't found in {0}"
-msgstr "La acción no fue encontrada en {0}"
+msgid "Project '{0}' hasn't '{1}' action. Found actions: {2}"
+msgstr "El proyecto '{0}' no tiene la acción '{1}'. Acciones encontradas: {2}"
+
+#, python-brace-format
+msgid "Pretending project '{0}' and action '{1}':"
+msgstr ""
 
 #, python-brace-format
 msgid "Executing project '{0}' and action '{1}'"
@@ -128,5 +135,3 @@ msgstr "El repositorio ya está creado en {}"
 msgid "Reading repository from {0} and listing available preprod scripts"
 msgstr ""
 
-#~ msgid "Exiting propred..."
-#~ msgstr "Saliendo de propred..."
