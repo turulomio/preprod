@@ -27,6 +27,7 @@ preprod_create_repository='preprod.core:create'
 
 [tool.poe.tasks]
 coverage = { script = "preprod.poethepoet:coverage" }
+doc = { script = "preprod.poethepoet:doc" }
 pytest = { script = "preprod.poethepoet:pytest" }
 release = { script = "preprod.poethepoet:release" }
 translate = { script = "preprod.poethepoet:translate" }

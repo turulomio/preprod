@@ -8,6 +8,7 @@ def release():
   * Editar README.md to add CHANGELOG
   * Ejecutar otra vez poe release
   * git checkout -b preprod-{0}
+  * poe doc
   * poe translate
   * linguist
   * poe translate
@@ -39,3 +40,30 @@ def translate():
     
 def pytest():
     system("pytest")
+
+def doc():
+    import io
+    import sys
+    import preprod.commons
+    # Replace 'module_name' with the actual module name you want to get help for
+
+    # Create a string buffer to capture the help output
+    buffer = io.StringIO()
+
+    # Redirect stdout to the buffer
+    sys.stdout = buffer
+
+    # Call the help function on the module
+    help(preprod.commons)
+
+    # Reset stdout to default
+    sys.stdout = sys.__stdout__
+
+    # Get the help output from the buffer
+    help_output = buffer.getvalue()
+
+    # Write the help output to a Markdown file
+    with open('doc/PREPROD_COMMANDS.md', 'w') as f:
+        f.write(f'```text\n{help_output}\n```')
+
+    print("Help output saved to doc/PREPROD_COMMANDS.md")
