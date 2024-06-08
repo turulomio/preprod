@@ -2,7 +2,7 @@
   "header": {
     "comment": "eric project file for project preprod",
     "copyright": "Copyright (C) 2024 , ",
-    "saved": "2024-05-21, 10:41:13"
+    "saved": "2024-06-08, 10:24:18"
   },
   "project": {
     "AUTHOR": "",
@@ -56,6 +56,7 @@
     "OTHERS": [
       ".gitignore",
       "README.md",
+      "doc/PREPROD_COMMANDS.md",
       "preprod.epj",
       "pyproject.toml"
     ],
