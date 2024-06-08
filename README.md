@@ -49,8 +49,11 @@ And your calories_tracker build is now in `/tmp/calories_tracker_build/dist`
 
 If something goes wrong you can see color logs in `/tmp/preprod_logs_your_user/`
 
+I hope you like it and give me a star.
 
 ## Commands
+
+You can see all preprod_commons method  [here](doc/PREPROD_COMMANDS.md)
 
 
 ## Changelog

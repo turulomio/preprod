@@ -8,6 +8,7 @@ def release():
   * Editar README.md to add CHANGELOG
   * Ejecutar otra vez poe release
   * git checkout -b preprod-{0}
+  * poe doc
   * poe translate
   * linguist
   * poe translate
@@ -39,3 +40,6 @@ def translate():
     
 def pytest():
     system("pytest")
+
+def doc():
+    system("python -c 'import preprod.commons; print(help(preprod.commons))' > doc/PREPROD_COMMANDS.md")
