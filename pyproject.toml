@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "preprod"
-version = "0.3.0"
+version = "0.4.0"
 description = "Easily creation of pre-production and production scripts to automete your deployment"
 authors = ["turulomio <turulomio@yahoo.es>"]
 license = "GPL-3"
