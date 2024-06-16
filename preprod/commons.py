@@ -1,4 +1,5 @@
 from colorama import Fore,  Style
+from getpass import getuser as getpass_getuser
 from gettext import translation
 from importlib.resources import files
 from os import getuid, path, listdir, remove, chdir as os_chdir, system  as os_system, makedirs as os_makedirs
@@ -205,6 +206,13 @@ def chdir(directory, show=True):
     concurrent_log(f"chdir('{directory}')")
     os_chdir(directory)
     print_after_ok(show)
+    
+    
+def getuser():
+    """
+        Returns a string with current user
+    """
+    return getpass_getuser()
 
 def git_clone(url,  output_directory="", description=""):
     """
