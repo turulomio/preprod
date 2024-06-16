@@ -13,7 +13,6 @@ if preprod_commons.is_root():
     print("I'm root")
 else:
     print("I'm a normal user")
-repository_commons.foo()
 
 preprod_commons.makedirs("/tmp/preprod_test")
 preprod_commons.run_and_check("pwd")
@@ -39,6 +38,8 @@ preprod_commons.rsync("README.md", "ANOTHERREADME.md")
 preprod_commons.poetry_install()
 preprod_commons.poetry_env_info()
 preprod_commons.apache_initd_restart()
+
+print(preprod_commons.getuser())
 """)
         
 def remove_test_project():
