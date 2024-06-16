@@ -63,21 +63,23 @@ def main(arguments=None):
     # Checks for project and action parameters
     if args.project is None and args.action is None:
         list_repository()
-        exit(10)
+        exit(1)
         
     print(commons.yellow(_("Reading repository from '{0}'").format(repository_path)))
-    if args.project is None or args.action is None:
-        print(commons.red(_("You need to set project and action parameters")))
-        exit(10)
-    
 
     dpa=commons.dictionary_project_actions()
     if not args.project in dpa: 
         print(commons.red(_("Project '{0}' wasn't found en repository. Found projects: {1}").format(args.project, commons.green(str(list(dpa.keys()))))))
-        exit(5)
+        exit(2)
+        
+    if args.action is None:
+        print(commons.red(_("Available actions for project '{0}': {1}").format(args.project,  commons.green(str(dpa[args.project])))))
+        exit(3)
+        
+        
     if not args.action in dpa[args.project]:
         print(commons.red(_("Project '{0}' hasn't '{1}' action. Found actions: {2}").format(args.project,  args.action, commons.green(str(dpa[args.project])))))
-        exit(5)
+        exit(4)
         
     if args.project is not None and args.action is not None:
         start=datetime.now()
@@ -115,8 +117,6 @@ def create():
     rp=commons.repository_path()
     
     makedirs(f"{rp}/foo/")
-    
-    
     
     with open(f"{rp}/repository_commons.py", "w") as f:
         f.write("""def foo():
