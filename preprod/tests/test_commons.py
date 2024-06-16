@@ -39,7 +39,13 @@ preprod_commons.poetry_install()
 preprod_commons.poetry_env_info()
 preprod_commons.apache_initd_restart()
 
-print(preprod_commons.getuser())
+preprod_commons.getuser()
+
+preprod_commons.rm("OTHERREADME.md")
+preprod_commons.rm("OTHERREADME.md")
+
+preprod_commons.create_a_file("OTHERREADME.md", "OTHER README")
+
 """)
         
 def remove_test_project():

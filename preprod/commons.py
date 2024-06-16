@@ -185,6 +185,14 @@ def system(command, description=""):
     concurrent_log(log)
     os_system(command)
 
+def rm(filename, description=""):
+    """
+        Removes a file
+    """
+    
+    description=_("Removing file '{0}'").format(filename) if description=="" else description
+    run_and_check(f"rm '{filename}'", description=description)
+
 def rmtree(directory, show=True):
     """
         Deletes a directory recursively. It directory doesn't exist ignores error
@@ -369,6 +377,19 @@ def chmod_recursive(path,  directory_permissions="755",  file_permissions="644",
     description=_("Changing directories permissions to {0} and files to {1}").format(directory_permissions, file_permissions) if description=="" else description
     run_and_check(f"find {path} -type d -exec chmod -R {directory_permissions} {{}} +", None)
     run_and_check(f"find {path} -type f -exec chmod -R {file_permissions} {{}} +", description)
+
+
+def create_a_file(filename, content, description=""):
+    """
+        Creates a new file or replaces it with content parameter
+    """
+    description=_(f"Creating file '{filename}'") if description=="" else description
+    print_before(description, description is not None)
+    with open(filename, "w") as f:
+        f.write(content)
+    print_after_ok(description is not None)
+    from preprod.core import concurrent_log
+    concurrent_log(description, content)
 
 def npm_install(description=""):
     run_and_check("npm install", description)
