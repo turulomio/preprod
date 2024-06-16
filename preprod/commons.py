@@ -402,5 +402,10 @@ def poetry_install(description=""):
     run_and_check("poetry install", description)
     
 def poetry_env_info():
+    """
+        Return the path to the python executable and pip executable inside current dir poetry virtualenv
+    """
     p=run("poetry env info -e", shell=True, capture_output=True)
-    return p.stdout.decode('utf-8')
+    python_=p.stdout.decode('utf-8')[:-1]
+    pip_=python_.replace("bin/python",  "bin/pip")
+    return python_,  pip_
