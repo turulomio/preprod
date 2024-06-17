@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TooManyFiles\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-08 11:10+0200\n"
+"POT-Creation-Date: 2024-06-17 10:30+0200\n"
 "PO-Revision-Date: 2020-04-03 08:54+0200\n"
 "Last-Translator: trabajo <turulomio@yahoo.es>\n"
 "Language-Team: Spanish <kde-i18n-doc@kde.org>\n"
@@ -47,6 +47,10 @@ msgid "Running with system '{0}'"
 msgstr "Ejecutando con system '{0}'"
 
 #, python-brace-format
+msgid "Removing file '{0}'"
+msgstr "Borrando fichero '{0}'"
+
+#, python-brace-format
 msgid "Deleting directory {0}"
 msgstr "Borrando directorio {0}"
 
@@ -63,7 +67,7 @@ msgstr "Actualizando repositorio git"
 
 #, python-brace-format
 msgid "Insert text at line {0} in {1}"
-msgstr ""
+msgstr "Insertando texto en la línea {0} en {1}"
 
 msgid "Line number is out of range"
 msgstr "El número de línea está fuera de rango"
@@ -80,10 +84,14 @@ msgstr "Reiniciando el servidor Apache"
 
 #, python-brace-format
 msgid "Changing '{0}' to owner {1}:{2}"
-msgstr ""
+msgstr "Cambiando '{0}' a propietario {1}:{2}"
 
 #, python-brace-format
 msgid "Changing directories permissions to {0} and files to {1}"
+msgstr ""
+
+#, python-brace-format
+msgid "Creating file '{filename}'"
 msgstr ""
 
 msgid "Developed by Mariano Muñoz 2023-{}"
@@ -105,12 +113,13 @@ msgstr "Identificación de la acción"
 msgid "Reading repository from '{0}'"
 msgstr "Leyendo repositorio desde '{0}'"
 
-msgid "You need to set project and action parameters"
-msgstr "Necesitas establecer los parámatros del proyecto y de la acción"
-
 #, python-brace-format
 msgid "Project '{0}' wasn't found en repository. Found projects: {1}"
 msgstr "El proyecto '{0}' no fue encontrado en el repositorio. Proyectos encontrados: {1}"
+
+#, python-brace-format
+msgid "Available actions for project '{0}': {1}"
+msgstr ""
 
 #, python-brace-format
 msgid "Project '{0}' hasn't '{1}' action. Found actions: {2}"
@@ -135,3 +144,5 @@ msgstr "El repositorio ya está creado en {}"
 msgid "Reading repository from {0} and listing available preprod scripts"
 msgstr ""
 
+#~ msgid "You need to set project and action parameters"
+#~ msgstr "Necesitas establecer los parámatros del proyecto y de la acción"

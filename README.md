@@ -58,6 +58,11 @@ You can see all preprod_commons method  [here](doc/PREPROD_COMMANDS.md)
 
 ## Changelog
 
+### 0.5.0 (2024-06-17)
+- Added getuser, rm, create_a_file commands
+- Improved preprod parameters experience
+- poetry_env_info now returns a tuple with the virtual env python executable and pip executable
+
 ### 0.4.0 (2024-06-08)
 - Temporal preprod logs are now created by each user to avoid permissions problems
 - Added examples and documentation

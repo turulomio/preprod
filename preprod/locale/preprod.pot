@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-08 11:14+0200\n"
+"POT-Creation-Date: 2024-06-17 10:31+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,6 +42,10 @@ msgstr ""
 
 #, python-brace-format
 msgid "Running with system '{0}'"
+msgstr ""
+
+#, python-brace-format
+msgid "Removing file '{0}'"
 msgstr ""
 
 #, python-brace-format
@@ -84,6 +88,10 @@ msgstr ""
 msgid "Changing directories permissions to {0} and files to {1}"
 msgstr ""
 
+#, python-brace-format
+msgid "Creating file '{filename}'"
+msgstr ""
+
 msgid "Developed by Mariano Muñoz 2023-{}"
 msgstr ""
 
@@ -103,11 +111,12 @@ msgstr ""
 msgid "Reading repository from '{0}'"
 msgstr ""
 
-msgid "You need to set project and action parameters"
+#, python-brace-format
+msgid "Project '{0}' wasn't found en repository. Found projects: {1}"
 msgstr ""
 
 #, python-brace-format
-msgid "Project '{0}' wasn't found en repository. Found projects: {1}"
+msgid "Available actions for project '{0}': {1}"
 msgstr ""
 
 #, python-brace-format
