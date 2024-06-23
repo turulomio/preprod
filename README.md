@@ -58,6 +58,10 @@ You can see all preprod_commons method  [here](doc/PREPROD_COMMANDS.md)
 
 ## Changelog
 
+### 0.6.0 (2024-06-23)
+- Solved problem creating python virtual environment
+- Improving tests procedure. Coverage is now 85% (#42)
+
 ### 0.5.0 (2024-06-17)
 - Added getuser, rm, create_a_file commands
 - Improved preprod parameters experience
