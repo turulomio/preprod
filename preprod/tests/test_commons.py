@@ -66,7 +66,32 @@ preprod_commons.git_clone("https://github.com/turulomio/preprod")
 preprod_commons.git_clone("https://github.com/turulomio/preprod", "preprod2")
     """)
     assert path.exists(f"{tmp_test_path}/preprod/.git/")
-    assert path.exists(f"{tmp_test_path}/preprod2/.git/")
+    assert path.exists(f"{tmp_test_path}/preprod2/.git/")    
+    
+def test_commons_git_pull():
+    create_and_run_action(currentframe().f_code.co_name,  """
+preprod_commons.git_clone("https://github.com/turulomio/preprod")
+preprod_commons.chdir("preprod")
+preprod_commons.git_pull()
+    """)    
+    
+def test_commons_run_and_check():
+    create_and_run_action(currentframe().f_code.co_name,  """
+preprod_commons.run_and_check("pwd")
+    """)    
+    
+
+def test_commons_chown_recursive():
+    create_and_run_action(currentframe().f_code.co_name,  """
+preprod_commons.system("touch hello")
+preprod_commons.chown_recursive("hello")
+    """)
+    
+def test_commons_chmod_recursive():
+    create_and_run_action(currentframe().f_code.co_name,  """
+preprod_commons.system("touch hello")
+preprod_commons.chmod_recursive("hello")
+    """)
     
 def make_test_action():
     print()
@@ -80,14 +105,10 @@ else:
     print("I'm a normal user")
 
 preprod_commons.makedirs("/tmp/preprod_test")
-preprod_commons.run_and_check("pwd")
-preprod_commons.system("pwd")
 preprod_commons.chdir("/tmp/preprod_test/")
 preprod_commons.git_clone("https://github.com/turulomio/preprod")
 preprod_commons.git_clone("https://github.com/turulomio/preprod", "preprod2")
 preprod_commons.chdir("/tmp/preprod_test/preprod")
-preprod_commons.chown_recursive("/tmp/preprod_test", "dely", "dely")
-preprod_commons.chmod_recursive("/tmp/preprod_test")
 preprod_commons.npm_install()
 preprod_commons.replace_in_file("/tmp/preprod_test/preprod/README.md", "preprod", "preprod_replaced")
 preprod_commons.lines_at_the_end_of_file("/tmp/preprod_test/preprod/README.md","THIS IS THE END")
@@ -110,7 +131,17 @@ preprod_commons.rm("OTHERREADME.md")
 
 preprod_commons.create_a_file("OTHERREADME.md", "OTHER README")
 """)
-    
+
+
+
+def test_commons_npm_install():
+    tmp_test_path=create_and_run_action(currentframe().f_code.co_name,  """
+preprod_commons.git_clone("https://github.com/turulomio/calories_tracker")
+preprod_commons.chdir("calories_tracker")
+preprod_commons.npm_install()
+    """)
+    assert path.exists(f"{tmp_test_path}/calories_tracker/node_modules/")
+
 def test_preprod():
     make_test_action()
     core.main(['test', 'test'])
