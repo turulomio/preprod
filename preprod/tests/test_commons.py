@@ -21,6 +21,7 @@ def setup_and_teardown():
     yield resource  # This allows all tests to run with the resource available
 
     # Code to run at the end
+    system(f"mv {project_test_path}/ {tmp_path}")
     print("Removing preprod test project")
     system(f"rm -Rf {project_test_path}")
 
@@ -65,57 +66,109 @@ preprod_commons.git_clone("https://github.com/turulomio/preprod")
 preprod_commons.git_clone("https://github.com/turulomio/preprod", "preprod2")
     """)
     assert path.exists(f"{tmp_test_path}/preprod/.git/")
-    assert path.exists(f"{tmp_test_path}/preprod2/.git/")
+    assert path.exists(f"{tmp_test_path}/preprod2/.git/")    
     
-def make_test_action():
-    print()
-    with open(f"{commons.repository_path()}test/test", "w") as f:
-        f.write("""
-preprod_commons.rmtree("/tmp/preprod_test/")
-print("This is foo project and start action")
-if preprod_commons.is_root():
-    print("I'm root")
-else:
-    print("I'm a normal user")
-
-preprod_commons.makedirs("/tmp/preprod_test")
-preprod_commons.run_and_check("pwd")
-preprod_commons.system("pwd")
-preprod_commons.chdir("/tmp/preprod_test/")
+def test_commons_git_pull():
+    create_and_run_action(currentframe().f_code.co_name,  """
 preprod_commons.git_clone("https://github.com/turulomio/preprod")
-preprod_commons.git_clone("https://github.com/turulomio/preprod", "preprod2")
-preprod_commons.chdir("/tmp/preprod_test/preprod")
-preprod_commons.chown_recursive("/tmp/preprod_test", "dely", "dely")
-preprod_commons.chmod_recursive("/tmp/preprod_test")
-preprod_commons.npm_install()
-preprod_commons.replace_in_file("/tmp/preprod_test/preprod/README.md", "preprod", "preprod_replaced")
-preprod_commons.lines_at_the_end_of_file("/tmp/preprod_test/preprod/README.md","THIS IS THE END")
-preprod_commons.insert_at_line("/tmp/preprod_test/preprod/README.md", 4, "THIS IS LINE 4")
-preprod_commons.delete_line_in_file("/tmp/preprod_test/preprod/README.md", 5)
-
+preprod_commons.chdir("preprod")
 preprod_commons.git_pull()
-preprod_commons.copyfile("README.md", "OTHERREADME.md")
-
-preprod_commons.rsync("README.md", "ANOTHERREADME.md")
-
-preprod_commons.poetry_install()
-print(preprod_commons.poetry_env_info())
-preprod_commons.apache_initd_restart()
-
-preprod_commons.getuser()
-
-preprod_commons.rm("OTHERREADME.md")
-preprod_commons.rm("OTHERREADME.md")
-
-preprod_commons.create_a_file("OTHERREADME.md", "OTHER README")
-""")
+    """)    
     
-def test_preprod():
-    make_test_action()
-    core.main(['test', 'test'])
+def test_commons_run_and_check():
+    create_and_run_action(currentframe().f_code.co_name,  """
+preprod_commons.run_and_check("pwd")
+    """)    
+    
+
+def test_commons_chown_recursive():
+    create_and_run_action(currentframe().f_code.co_name,  """
+preprod_commons.create_a_file("hello", "")
+preprod_commons.chown_recursive("hello")
+    """)
+    
+def test_commons_chmod_recursive():
+    create_and_run_action(currentframe().f_code.co_name,  """
+preprod_commons.create_a_file("hello", "")
+preprod_commons.chmod_recursive("hello")
+    """)
+    
+
+def test_commons_replace_in_file():   
+    create_and_run_action(currentframe().f_code.co_name,  """
+preprod_commons.create_a_file("hello.txt", "hello")
+preprod_commons.replace_in_file("hello.txt", "hello", "bye")
+    """)
+    assert commons.file_contains_string("hello.txt",  "bye")
+    
+def test_commons_lines_at_the_end_of_file():   
+    create_and_run_action(currentframe().f_code.co_name,  """
+preprod_commons.create_a_file("numbers.txt", "one\\n")
+preprod_commons.lines_at_the_end_of_file("numbers.txt", "two")
+    """)
+    assert commons.file_contains_string("numbers.txt",  "two")
+    
+def test_commons_insert_at_line():   
+    create_and_run_action(currentframe().f_code.co_name,  """
+preprod_commons.create_a_file("numbers.txt", "one\\nthree")
+preprod_commons.insert_at_line("numbers.txt", 2, "two")
+    """)
+    
+    with open("numbers.txt",  "r") as f:
+        line=f.readlines()
+        assert "two" in line[1]
+
+def test_commons_delete_line_in_file():   
+    create_and_run_action(currentframe().f_code.co_name,  """
+preprod_commons.create_a_file("numbers.txt", "one\\ntwo\\nthree")
+preprod_commons.delete_line_in_file("numbers.txt", 2,)
+    """)
+    assert not commons.file_contains_string("numbers.txt",  "two")
+    
+def test_commons_copyfile():   
+    create_and_run_action(currentframe().f_code.co_name,  """
+preprod_commons.create_a_file("hello.txt", "")
+preprod_commons.copyfile("hello.txt", "bye.txt")
+    """)
+    assert path.exists("hello.txt")
+    assert path.exists("bye.txt")     
+    
+def test_commons_rm():   
+    create_and_run_action(currentframe().f_code.co_name,  """
+preprod_commons.create_a_file("hello.txt","")
+preprod_commons.rm("hello.txt")
+    """)
+    assert not path.exists("hello.txt")
+    
+    
+def test_commons_rsync():   
+    create_and_run_action(currentframe().f_code.co_name,  """
+preprod_commons.create_a_file("hello.txt", "")
+preprod_commons.rsync("hello.txt", "bye.txt")
+    """)
+    assert path.exists("hello.txt")
+    assert path.exists("bye.txt")
+        
+
+def test_commons_poetry_install():
+    create_and_run_action(currentframe().f_code.co_name,  """
+preprod_commons.git_clone("https://github.com/turulomio/django_calories_tracker")
+preprod_commons.chdir("django_calories_tracker")
+preprod_commons.poetry_install()
+    """)
+    
+    assert "preprod-hsKAf-PM" in commons.poetry_env_info()[0]
+
+def test_commons_npm_install():
+    tmp_test_path=create_and_run_action(currentframe().f_code.co_name,  """
+preprod_commons.git_clone("https://github.com/turulomio/calories_tracker")
+preprod_commons.chdir("calories_tracker")
+preprod_commons.npm_install()
+    """)
+    assert path.exists(f"{tmp_test_path}/calories_tracker/node_modules/")
+
     
 def test_list():
-    make_test_action()
     with raises(SystemExit):
         core.main([])
     
@@ -124,7 +177,7 @@ def test_list():
     with raises(SystemExit):
         core.main(["test", "test2"])
         
-    core.main(['test', 'test', '--pretend'])
+    core.main(['test', 'test_commons_run_and_check', '--pretend'])
 
     
 def test_list_repository():
