@@ -21,6 +21,7 @@ def setup_and_teardown():
     yield resource  # This allows all tests to run with the resource available
 
     # Code to run at the end
+    system(f"mv {project_test_path}/ {tmp_path}")
     print("Removing preprod test project")
     system(f"rm -Rf {project_test_path}")
 
