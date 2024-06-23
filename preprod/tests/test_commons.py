@@ -1,10 +1,74 @@
+from inspect import currentframe
 from preprod import commons, core
-from os import system
-from pytest import raises
+from os import system, path
+
+from pytest import raises, fixture
+
+project_test_path=f"{commons.repository_path()}test"
+tmp_path="/tmp/preprod_tests"
+
+
+
+@fixture(scope='session', autouse=True)
+def setup_and_teardown():
+    # Code to run at the beginning
+    print("Creating preprod test project!")
+    system(f"rm -Rf {tmp_path}")
+    system(f"mkdir -p {project_test_path}")
+    # Anything you need to initialize
+    resource = "alltests"
+
+    yield resource  # This allows all tests to run with the resource available
+
+    # Code to run at the end
+    print("Removing preprod test project")
+    system(f"rm -Rf {project_test_path}")
+
+    
+def create_and_run_action(func_name,  code_):
+    """
+        Creates a action in repository called test/func_name
+        Creates a /tmp/ directory exclusive for this test
+        Chdir in this directory
+    """
+    tmp_test_path=f"{tmp_path}/{func_name}/"
+    with open(f"{project_test_path}/{func_name}", "w") as f:
+        f.write(f"""
+preprod_commons.makedirs("{tmp_test_path}")
+preprod_commons.chdir("{tmp_test_path}")
+{code_}
+""")
+    core.main(["test", func_name])
+    return tmp_test_path
+    
+def test_commons_create_python_virtual_env():
+    tmp_test_path=create_and_run_action(currentframe().f_code.co_name,  """
+preprod_commons.create_python_virtual_env(python_version_name="python3.11", system_site_packages=False)
+preprod_commons.create_python_virtual_env(python_version_name="python3.12", system_site_packages=True)
+    """)
+    assert path.exists(f"{tmp_test_path}/.python3.11/bin/python3.11")
+    assert path.exists(f"{tmp_test_path}/.python3.12/bin/python3.12")
+    assert commons.file_contains_string(f"{tmp_test_path}/.python3.11/pyvenv.cfg",  "include-system-site-packages = false")
+    assert commons.file_contains_string(f"{tmp_test_path}/.python3.12/pyvenv.cfg",  "include-system-site-packages = true")
+    
+def test_commons_rmtree():
+    tmp_test_path=create_and_run_action(currentframe().f_code.co_name,  """
+preprod_commons.makedirs("to_delete")
+preprod_commons.rmtree("to_delete")
+    """)
+    assert not path.exists(f"{tmp_test_path}/to_delete/")
+    
+    
+def test_commons_git_clone():
+    tmp_test_path=create_and_run_action(currentframe().f_code.co_name,  """
+preprod_commons.git_clone("https://github.com/turulomio/preprod")
+preprod_commons.git_clone("https://github.com/turulomio/preprod", "preprod2")
+    """)
+    assert path.exists(f"{tmp_test_path}/preprod/.git/")
+    assert path.exists(f"{tmp_test_path}/preprod2/.git/")
     
 def make_test_action():
     print()
-    system(f"mkdir -p {commons.repository_path()}test")
     with open(f"{commons.repository_path()}test/test", "w") as f:
         f.write("""
 preprod_commons.rmtree("/tmp/preprod_test/")
@@ -32,7 +96,6 @@ preprod_commons.delete_line_in_file("/tmp/preprod_test/preprod/README.md", 5)
 preprod_commons.git_pull()
 preprod_commons.copyfile("README.md", "OTHERREADME.md")
 
-preprod_commons.create_python_virtual_env()
 preprod_commons.rsync("README.md", "ANOTHERREADME.md")
 
 preprod_commons.poetry_install()
@@ -46,12 +109,8 @@ preprod_commons.rm("OTHERREADME.md")
 
 preprod_commons.create_a_file("OTHERREADME.md", "OTHER README")
 """)
-        
-def remove_test_project():
-    system(f"rm -Rf {commons.repository_path()}test")
     
 def test_preprod():
-    remove_test_project()
     make_test_action()
     core.main(['test', 'test'])
     
@@ -66,6 +125,10 @@ def test_list():
         core.main(["test", "test2"])
         
     core.main(['test', 'test', '--pretend'])
+
     
 def test_list_repository():
     core.list_repository()
+
+
+    
