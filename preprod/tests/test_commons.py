@@ -101,38 +101,66 @@ preprod_commons.replace_in_file("hello.txt", "hello", "bye")
     """)
     assert commons.file_contains_string("hello.txt",  "bye")
     
+def test_commons_lines_at_the_end_of_file():   
+    create_and_run_action(currentframe().f_code.co_name,  """
+preprod_commons.system("echo 'one' > numbers.txt")
+preprod_commons.lines_at_the_end_of_file("numbers.txt", "two")
+    """)
+    assert commons.file_contains_string("numbers.txt",  "two")
     
-def make_test_action():
-    print()
-    with open(f"{commons.repository_path()}test/test", "w") as f:
-        f.write("""
-if preprod_commons.is_root():
-    print("I'm root")
-else:
-    print("I'm a normal user")
+def test_commons_insert_at_line():   
+    create_and_run_action(currentframe().f_code.co_name,  """
+preprod_commons.system("echo 'one' > numbers.txt")
+preprod_commons.system("echo 'three' >> numbers.txt")
+preprod_commons.insert_at_line("numbers.txt", 2, "two")
+    """)
     
-preprod_commons.replace_in_file("/tmp/preprod_test/preprod/README.md", "preprod", "preprod_replaced")
-preprod_commons.lines_at_the_end_of_file("/tmp/preprod_test/preprod/README.md","THIS IS THE END")
-preprod_commons.insert_at_line("/tmp/preprod_test/preprod/README.md", 4, "THIS IS LINE 4")
-preprod_commons.delete_line_in_file("/tmp/preprod_test/preprod/README.md", 5)
+    with open("numbers.txt",  "r") as f:
+        line=f.readlines()
+        assert "two" in line[1]
 
-preprod_commons.copyfile("README.md", "OTHERREADME.md")
+def test_commons_delete_line_in_file():   
+    create_and_run_action(currentframe().f_code.co_name,  """
+preprod_commons.system("echo 'one' > numbers.txt")
+preprod_commons.system("echo 'two' >> numbers.txt")
+preprod_commons.system("echo 'three' >> numbers.txt")
+preprod_commons.delete_line_in_file("numbers.txt", 2,)
+    """)
+    assert not commons.file_contains_string("numbers.txt",  "two")
+    
+def test_commons_copyfile():   
+    create_and_run_action(currentframe().f_code.co_name,  """
+preprod_commons.system("touch hello.txt")
+preprod_commons.copyfile("hello.txt", "bye.txt")
+    """)
+    assert path.exists("hello.txt")
+    assert path.exists("bye.txt")     
+    
+def test_commons_rm():   
+    create_and_run_action(currentframe().f_code.co_name,  """
+preprod_commons.create_a_file("hello.txt","")
+preprod_commons.rm("hello.txt")
+    """)
+    assert not path.exists("hello.txt")
+    
+    
+def test_commons_rsync():   
+    create_and_run_action(currentframe().f_code.co_name,  """
+preprod_commons.system("touch hello.txt")
+preprod_commons.rsync("hello.txt", "bye.txt")
+    """)
+    assert path.exists("hello.txt")
+    assert path.exists("bye.txt")
+        
 
-preprod_commons.rsync("README.md", "ANOTHERREADME.md")
-
+def test_commons_poetry_install():
+    create_and_run_action(currentframe().f_code.co_name,  """
+preprod_commons.git_clone("https://github.com/turulomio/django_calories_tracker")
+preprod_commons.chdir("django_calories_tracker")
 preprod_commons.poetry_install()
-print(preprod_commons.poetry_env_info())
-preprod_commons.apache_initd_restart()
-
-preprod_commons.getuser()
-
-preprod_commons.rm("OTHERREADME.md")
-preprod_commons.rm("OTHERREADME.md")
-
-preprod_commons.create_a_file("OTHERREADME.md", "OTHER README")
-""")
-
-
+    """)
+    
+    assert "preprod-hsKAf-PM" in commons.poetry_env_info()[0]
 
 def test_commons_npm_install():
     tmp_test_path=create_and_run_action(currentframe().f_code.co_name,  """
@@ -142,12 +170,8 @@ preprod_commons.npm_install()
     """)
     assert path.exists(f"{tmp_test_path}/calories_tracker/node_modules/")
 
-def test_preprod():
-    make_test_action()
-    core.main(['test', 'test'])
     
 def test_list():
-    make_test_action()
     with raises(SystemExit):
         core.main([])
     
@@ -156,7 +180,7 @@ def test_list():
     with raises(SystemExit):
         core.main(["test", "test2"])
         
-    core.main(['test', 'test', '--pretend'])
+    core.main(['test', 'test_commons_run_and_check', '--pretend'])
 
     
 def test_list_repository():
