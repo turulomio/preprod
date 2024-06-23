@@ -83,35 +83,34 @@ preprod_commons.run_and_check("pwd")
 
 def test_commons_chown_recursive():
     create_and_run_action(currentframe().f_code.co_name,  """
-preprod_commons.system("touch hello")
+preprod_commons.create_a_file("hello", "")
 preprod_commons.chown_recursive("hello")
     """)
     
 def test_commons_chmod_recursive():
     create_and_run_action(currentframe().f_code.co_name,  """
-preprod_commons.system("touch hello")
+preprod_commons.create_a_file("hello", "")
 preprod_commons.chmod_recursive("hello")
     """)
     
 
 def test_commons_replace_in_file():   
     create_and_run_action(currentframe().f_code.co_name,  """
-preprod_commons.system("echo 'hello' > hello.txt")
+preprod_commons.create_a_file("hello.txt", "hello")
 preprod_commons.replace_in_file("hello.txt", "hello", "bye")
     """)
     assert commons.file_contains_string("hello.txt",  "bye")
     
 def test_commons_lines_at_the_end_of_file():   
     create_and_run_action(currentframe().f_code.co_name,  """
-preprod_commons.system("echo 'one' > numbers.txt")
+preprod_commons.create_a_file("numbers.txt", "one\\n")
 preprod_commons.lines_at_the_end_of_file("numbers.txt", "two")
     """)
     assert commons.file_contains_string("numbers.txt",  "two")
     
 def test_commons_insert_at_line():   
     create_and_run_action(currentframe().f_code.co_name,  """
-preprod_commons.system("echo 'one' > numbers.txt")
-preprod_commons.system("echo 'three' >> numbers.txt")
+preprod_commons.create_a_file("numbers.txt", "one\\nthree")
 preprod_commons.insert_at_line("numbers.txt", 2, "two")
     """)
     
@@ -121,7 +120,7 @@ preprod_commons.insert_at_line("numbers.txt", 2, "two")
 
 def test_commons_delete_line_in_file():   
     create_and_run_action(currentframe().f_code.co_name,  """
-preprod_commons.create_a_file("hello.txt", f"one\ntwo\nthree")
+preprod_commons.create_a_file("numbers.txt", "one\\ntwo\\nthree")
 preprod_commons.delete_line_in_file("numbers.txt", 2,)
     """)
     assert not commons.file_contains_string("numbers.txt",  "two")
