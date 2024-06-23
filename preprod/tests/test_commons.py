@@ -121,16 +121,14 @@ preprod_commons.insert_at_line("numbers.txt", 2, "two")
 
 def test_commons_delete_line_in_file():   
     create_and_run_action(currentframe().f_code.co_name,  """
-preprod_commons.system("echo 'one' > numbers.txt")
-preprod_commons.system("echo 'two' >> numbers.txt")
-preprod_commons.system("echo 'three' >> numbers.txt")
+preprod_commons.create_a_file("hello.txt", f"one\ntwo\nthree")
 preprod_commons.delete_line_in_file("numbers.txt", 2,)
     """)
     assert not commons.file_contains_string("numbers.txt",  "two")
     
 def test_commons_copyfile():   
     create_and_run_action(currentframe().f_code.co_name,  """
-preprod_commons.system("touch hello.txt")
+preprod_commons.create_a_file("hello.txt", "")
 preprod_commons.copyfile("hello.txt", "bye.txt")
     """)
     assert path.exists("hello.txt")
@@ -146,7 +144,7 @@ preprod_commons.rm("hello.txt")
     
 def test_commons_rsync():   
     create_and_run_action(currentframe().f_code.co_name,  """
-preprod_commons.system("touch hello.txt")
+preprod_commons.create_a_file("hello.txt", "")
 preprod_commons.rsync("hello.txt", "bye.txt")
     """)
     assert path.exists("hello.txt")
