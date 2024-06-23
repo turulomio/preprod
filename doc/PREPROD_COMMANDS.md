@@ -43,6 +43,16 @@ FUNCTIONS
         If it is another kind of object, it will be printed and the system
         exit status will be one (i.e., failure).
 
+    file_contains_string(file_path, search_string)
+        Check if the specified file contains the given string.
+
+        Args:
+        file_path (str): The path to the file.
+        search_string (str): The string to search for in the file.
+
+        Returns:
+        bool: True if the file contains the string, False otherwise.
+
     getuid()
         Return the current process's user id.
 
@@ -166,11 +176,12 @@ FUNCTIONS
 DATA
     Fore = <colorama.ansi.AnsiFore object>
     Style = <colorama.ansi.AnsiStyle object>
+    result = False
     stdout = <_io.TextIOWrapper name='<stdout>' mode='w' encoding='utf-8'>
     t = <gettext.GNUTranslations object>
 
 FILE
-    /home/dely/Proyectos/preprod/preprod/commons.py
+    /home/keko/Proyectos/preprod/preprod/commons.py
 
 
 
