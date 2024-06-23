@@ -7,14 +7,14 @@ license = "GPL-3"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
-colorama = "^0.4.6"
+python = ">=3.11,<4"
+colorama = ">=0.4.6"
 
 [tool.poetry.group.dev.dependencies]
-poetry = "^1.8.2"
-poethepoet = "^0.26.1"
-pytest = "^8.2.0"
-coverage = "^7.5.0"
+poetry = ">=1.8.3"
+poethepoet = ">=0.26.1"
+pytest = ">=8.2.2"
+coverage = ">=7.5.4"
 
 [build-system]
 requires = ["poetry-core"]

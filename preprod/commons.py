@@ -221,6 +221,36 @@ def getuser():
         Returns a string with current user
     """
     return getpass_getuser()
+    
+def file_contains_string(file_path, search_string):
+    """
+    Check if the specified file contains the given string.
+    
+    Args:
+    file_path (str): The path to the file.
+    search_string (str): The string to search for in the file.
+
+    Returns:
+    bool: True if the file contains the string, False otherwise.
+    """
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            # Read through the file
+            for line in file:
+                if search_string in line:
+                    return True
+        return False
+    except FileNotFoundError:
+        print(f"The file {file_path} does not exist.")
+        return False
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return False
+
+# Example usage:
+result = file_contains_string('example.txt', 'specific text')
+print(result)
+
 
 def git_clone(url,  output_directory="", description=""):
     """
@@ -360,7 +390,7 @@ def create_python_virtual_env(python_version_name="python3.11", system_site_pack
     """
     str_sss="--system-site-packages" if system_site_packages else ""
     run_and_check(f"{python_version_name} -m venv {str_sss} .{python_version_name}", description= f"Creating virtual env at .{python_version_name}")
-    return path.abspath(".python3.11/bin/python3"), path.abspath(".python3.11/bin/pip")
+    return path.abspath(f".{python_version_name}/bin/python3"), path.abspath(f".{python_version_name}/bin/pip")
 
 def apache_initd_restart(description=""):
     """
