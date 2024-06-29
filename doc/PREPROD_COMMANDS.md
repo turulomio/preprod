@@ -53,6 +53,9 @@ FUNCTIONS
         Returns:
         bool: True if the file contains the string, False otherwise.
 
+    getcwd()
+        Return a unicode string representing the current working directory.
+
     getuid()
         Return the current process's user id.
 
@@ -161,10 +164,20 @@ FUNCTIONS
 
     rsync(from_, to_, delete_after=False, description='')
 
-    run_and_check(command, description='', expected_returncode=0, expected_stdout=None)
-        Executes a comand and returns a boolean if command was executed as expected
+    run_and_check(command, user=None, userpassword=None, description='', expected_returncode=0, expected_stdout=None)
+        Executes a command as another user and checks if it was executed as expected.
 
-    system(command, description='')
+        Args:
+        - command (str): The command to execute.
+        - username (str): The username of the user under whom to execute the command.
+        - description (str, optional): Description of the command (for logging purposes).
+        - expected_returncode (int, optional): Expected return code of the command.
+        - expected_stdout (str, optional): Expected output in stdout.
+
+        Returns:
+        - bool: True if the command was executed as expected, False otherwise.
+
+    system(command, user=None, description='')
         Runs a command with system
 
     white(s)
@@ -175,8 +188,8 @@ FUNCTIONS
 
 DATA
     Fore = <colorama.ansi.AnsiFore object>
+    PIPE = -1
     Style = <colorama.ansi.AnsiStyle object>
-    result = False
     stdout = <_io.TextIOWrapper name='<stdout>' mode='w' encoding='utf-8'>
     t = <gettext.GNUTranslations object>
 

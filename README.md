@@ -58,6 +58,10 @@ You can see all preprod_commons method  [here](doc/PREPROD_COMMANDS.md)
 
 ## Changelog
 
+### 0.7.0 (2024-06-29)
+- run_and_check allows to add user and password parameters
+- system allows to add user parameter
+
 ### 0.6.0 (2024-06-23)
 - Solved problem creating python virtual environment
 - Improving tests procedure. Coverage is now 85% (#42)
