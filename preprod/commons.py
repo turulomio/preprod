@@ -247,10 +247,6 @@ def file_contains_string(file_path, search_string):
         print(f"An error occurred: {e}")
         return False
 
-# Example usage:
-result = file_contains_string('example.txt', 'specific text')
-print(result)
-
 
 def git_clone(url,  output_directory="", description=""):
     """
