@@ -1,6 +1,6 @@
 from inspect import currentframe
 from preprod import commons, core
-from os import system, path, chdir
+from os import system, path
 from shutil import which
 
 from pytest import raises, fixture
