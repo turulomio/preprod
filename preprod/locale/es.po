@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TooManyFiles\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-17 10:30+0200\n"
+"POT-Creation-Date: 2024-06-29 09:15+0200\n"
 "PO-Revision-Date: 2020-04-03 08:54+0200\n"
 "Last-Translator: trabajo <turulomio@yahoo.es>\n"
 "Language-Team: Spanish <kde-i18n-doc@kde.org>\n"
@@ -39,12 +39,20 @@ msgid "Appending text at the end of {0}"
 msgstr "Añadiendo texto al final de {0}"
 
 #, python-brace-format
-msgid "Running '{0}'"
-msgstr "Ejecutando '{0}'"
+msgid "Running with user '{0}' and system '{1}'"
+msgstr ""
+
+#, python-brace-format
+msgid "Running '{0}' as user '{1}'"
+msgstr "Ejecutando '{0}' con el usuario '{1}'"
 
 #, python-brace-format
 msgid "Running with system '{0}'"
 msgstr "Ejecutando con system '{0}'"
+
+#, python-brace-format
+msgid "Running '{0}'"
+msgstr "Ejecutando '{0}'"
 
 #, python-brace-format
 msgid "Removing file '{0}'"
@@ -119,7 +127,7 @@ msgstr "El proyecto '{0}' no fue encontrado en el repositorio. Proyectos encontr
 
 #, python-brace-format
 msgid "Available actions for project '{0}': {1}"
-msgstr ""
+msgstr "Acciones disponibles para el proyecto '{0}': {1}"
 
 #, python-brace-format
 msgid "Project '{0}' hasn't '{1}' action. Found actions: {2}"
@@ -127,7 +135,7 @@ msgstr "El proyecto '{0}' no tiene la acción '{1}'. Acciones encontradas: {2}"
 
 #, python-brace-format
 msgid "Pretending project '{0}' and action '{1}':"
-msgstr ""
+msgstr "Simulando el proyecto '{0}' y la acción '{1}':"
 
 #, python-brace-format
 msgid "Executing project '{0}' and action '{1}'"
