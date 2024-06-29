@@ -80,8 +80,7 @@ def test_commons_run_and_check():
     
     create_and_run_action(currentframe().f_code.co_name,  """
 preprod_commons.run_and_check("pwd")
-    """)    
-    assert False
+    """)
 
 def test_commons_chown_recursive():
     create_and_run_action(currentframe().f_code.co_name,  """
