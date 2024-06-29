@@ -1,13 +1,12 @@
+from getpass import getuser
 from inspect import currentframe
 from preprod import commons, core
 from os import system, path
-from shutil import which
-
 from pytest import raises, fixture
+from shutil import which
 
 project_test_path=f"{commons.repository_path()}test"
 tmp_path="/tmp/preprod_tests"
-
 
 
 @fixture(scope='session', autouse=True)
@@ -79,8 +78,10 @@ preprod_commons.git_pull()
     """)    
     
 def test_commons_run_and_check():
-    create_and_run_action(currentframe().f_code.co_name,  """
+    
+    create_and_run_action(currentframe().f_code.co_name,  f"""
 preprod_commons.run_and_check("pwd")
+preprod_commons.run_and_check("pwd", "{getuser()}" )
     """)    
     
 
