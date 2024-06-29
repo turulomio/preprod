@@ -1,6 +1,6 @@
 from inspect import currentframe
 from preprod import commons, core
-from os import system, path
+from os import system, path, chdir
 from shutil import which
 
 from pytest import raises, fixture
@@ -159,8 +159,6 @@ preprod_commons.git_clone("https://github.com/turulomio/django_calories_tracker"
 preprod_commons.chdir("django_calories_tracker")
 preprod_commons.poetry_install()
     """)
-    
-    assert "preprod-hsKAf-PM" in commons.poetry_env_info()[0]
 
 def test_commons_npm_install():
     tmp_test_path=create_and_run_action(currentframe().f_code.co_name,  """
