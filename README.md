@@ -58,7 +58,7 @@ You can see all preprod_commons method  [here](doc/PREPROD_COMMANDS.md)
 
 ## Changelog
 
-### 1.0.0 (2024-06-29)
+### 1.0.1 (2024-06-29)
 - run_and_check allows to add user and password parameters
 - system allows to add user parameter
 
