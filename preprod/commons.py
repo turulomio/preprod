@@ -2,10 +2,10 @@ from colorama import Fore,  Style
 from getpass import getuser as getpass_getuser
 from gettext import translation
 from importlib.resources import files
-from os import getuid, path, listdir, remove, chdir as os_chdir, system  as os_system, makedirs as os_makedirs
+from os import getuid, path, listdir, remove, chdir as os_chdir, system  as os_system, makedirs as os_makedirs, getcwd
 from shutil import copyfile as shutil_copyfile, rmtree as shutil_rmtree
 from socket import create_connection
-from subprocess import run
+from subprocess import run, Popen, PIPE
 from sys import exit, stdout
 
 """
@@ -140,7 +140,7 @@ def system(command, user=None, description=""):
     
     if user is not None:
         log=_("Running with user '{0}' and system '{1}'").format(user, command) 
-        command=f"su {user} -c '{command}'"
+        command=f"su - {user} -c '{command}'"
         description=_("Running '{0}' as user '{1}'").format(command, user) if description=="" else description
     else:
         log=_("Running with system '{0}'").format(command) 
@@ -150,7 +150,7 @@ def system(command, user=None, description=""):
     concurrent_log(log)
     os_system(command)
 
-def run_and_check(command, user=None,   description="",  expected_returncode=0,  expected_stdout=None):
+def run_and_check(command, user=None, userpassword=None,    description="",  expected_returncode=0,  expected_stdout=None):
     """
         Executes a command as another user and checks if it was executed as expected.
 
@@ -166,14 +166,25 @@ def run_and_check(command, user=None,   description="",  expected_returncode=0, 
     """
     
     if user is not None:
-        command=f"su {user} -c '{command}'"
+        command=f"su - {user} -c '{command}'"
         description=_("Running '{0}' as user '{1}'").format(command, user) if description=="" else description
     else:
         description=_("Running '{0}'").format(command) if description=="" else description
     
     print_before(description, description is not None)
     
-    p=run(command, shell=True, capture_output=True)
+    if userpassword is None:
+        p=run(command, shell=True, capture_output=True)
+    else:
+        p = Popen(command, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, cwd=getcwd())
+
+        # Pass password to su using stdin.write
+        p.stdin.write(userpassword.encode('utf-8') + b'\n')
+        p.stdin.flush()
+
+        # Wait for the command to complete and get stdout and stderr
+        stdout, stderr = p.communicate()
+
     
     #Check if process is valid
     r=False
@@ -190,8 +201,12 @@ def run_and_check(command, user=None,   description="",  expected_returncode=0, 
         print_after_error(description is not None)
             
     from preprod.core import concurrent_log
-    stdout_=p.stdout.decode('utf-8')
-    stderr_=p.stderr.decode('utf-8')
+    if userpassword is None:
+        stdout_=p.stdout.decode('utf-8')
+        stderr_=p.stderr.decode('utf-8')
+    else:
+        stdout_=stdout.decode('utf-8')
+        stderr_=stderr.decode('utf-8')
     if  user is None:
         concurrent_log(f"run_and_check('{command}')",  stdout_, stderr_)
     else:

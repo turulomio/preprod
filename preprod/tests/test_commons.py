@@ -1,4 +1,3 @@
-from getpass import getuser
 from inspect import currentframe
 from preprod import commons, core
 from os import system, path
@@ -79,11 +78,10 @@ preprod_commons.git_pull()
     
 def test_commons_run_and_check():
     
-    create_and_run_action(currentframe().f_code.co_name,  f"""
+    create_and_run_action(currentframe().f_code.co_name,  """
 preprod_commons.run_and_check("pwd")
-preprod_commons.run_and_check("pwd", "{getuser()}" )
     """)    
-    
+    assert False
 
 def test_commons_chown_recursive():
     create_and_run_action(currentframe().f_code.co_name,  """
