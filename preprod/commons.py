@@ -139,11 +139,11 @@ def system(command, user=None, description=""):
     """
     
     if user is not None:
-        log=_("Running with user '{0}' and system '{1}'").format(user, command) 
-        command=f"su - {user} -c '{command}'"
-        description=_("Running '{0}' as user '{1}'").format(command, user) if description=="" else description
+        command=f"""su - {user} -c "cd '{getcwd()}' && {command}" """
+        log=_("Running '{0}' as user '{1}' with system command").format(command, user)
+        description=log if description=="" else description
     else:
-        log=_("Running with system '{0}'").format(command) 
+        log=_("Running '{0}' with system command").format(command) 
         description=log if description=="" else description
     print_before(description, description is not None)
     from preprod.core import concurrent_log
