@@ -119,6 +119,13 @@ preprod_commons.insert_at_line("numbers.txt", 2, "two")
         line=f.readlines()
         assert "two" in line[1]
 
+def test_commons_kill_from_ps_aux():   
+    create_and_run_action(currentframe().f_code.co_name,  """
+preprod_commons.system("sleep 4 &")
+preprod_commons.kill_from_ps_aux("sleep")
+preprod_commons.kill_from_ps_aux("sleeping")
+    """)
+
 def test_commons_delete_line_in_file():   
     create_and_run_action(currentframe().f_code.co_name,  """
 preprod_commons.create_a_file("numbers.txt", "one\\ntwo\\nthree")
