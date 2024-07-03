@@ -383,6 +383,40 @@ def is_root():
     """
     return getuid() == 0
     
+    
+def kill_from_ps_aux(pattern, description=""):
+    """
+        Searchs a case sensitive pattern in ps aux command. It will kill all process with this pattern throug its pid using kill command
+    """
+    description=_("killing all process that contain '{0}' in ps aux.").format(pattern) if description=="" else description
+    print_before(description, description is not None)
+
+    r=run("ps aux",  shell=True,  capture_output=True)
+    s=r.stdout.decode("UTF-8")
+    
+    detected=0
+    killed=0
+    kill_output=""
+    for line in s.split("\n"):
+        if pattern in line:
+            detected+=1
+            pid=line[9:].split(" ")[0]
+            k=run(f"kill -9 {pid}", shell=True,  capture_output=True)
+            kill_output+=k.stdout.decode("UTF-8")+"\n"
+            if k.returncode==0:
+                killed+=1
+
+
+    print( _("Found {0}. Killed {1}").format(detected, killed) +" ",  end="")
+    stdout.flush()
+    if detected==killed and detected>0:
+        print_after_ok(description is not None)
+    else:
+        print_after_error(description is not None)
+
+    from preprod.core import concurrent_log
+    concurrent_log(description, kill_output)
+    
 def repository_path():
     """
         Returns repository path
