@@ -81,6 +81,14 @@ def test_commons_run_and_check():
     create_and_run_action(currentframe().f_code.co_name,  """
 preprod_commons.run_and_check("pwd")
     """)
+    
+def test_commons_system():
+    
+    function_name=currentframe().f_code.co_name
+    create_and_run_action(function_name,  f"""
+preprod_commons.chdir("{tmp_path}")
+preprod_commons.system("pwd > {tmp_path}/{function_name}/system")
+    """)
 
 def test_commons_chown_recursive():
     create_and_run_action(currentframe().f_code.co_name,  """
