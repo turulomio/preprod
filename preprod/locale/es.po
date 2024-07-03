@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TooManyFiles\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-29 09:15+0200\n"
+"POT-Creation-Date: 2024-07-03 09:08+0200\n"
 "PO-Revision-Date: 2020-04-03 08:54+0200\n"
 "Last-Translator: trabajo <turulomio@yahoo.es>\n"
 "Language-Team: Spanish <kde-i18n-doc@kde.org>\n"
@@ -39,16 +39,16 @@ msgid "Appending text at the end of {0}"
 msgstr "Añadiendo texto al final de {0}"
 
 #, python-brace-format
-msgid "Running with user '{0}' and system '{1}'"
-msgstr ""
+msgid "Running '{0}' as user '{1}' with system command"
+msgstr "Ejecutando '{0}' como usuario '{1}' con el comando system"
+
+#, python-brace-format
+msgid "Running '{0}' with system command"
+msgstr "Ejecutando '{0}' con el comando system"
 
 #, python-brace-format
 msgid "Running '{0}' as user '{1}'"
 msgstr "Ejecutando '{0}' con el usuario '{1}'"
-
-#, python-brace-format
-msgid "Running with system '{0}'"
-msgstr "Ejecutando con system '{0}'"
 
 #, python-brace-format
 msgid "Running '{0}'"
@@ -83,6 +83,14 @@ msgstr "El número de línea está fuera de rango"
 #, python-brace-format
 msgid "Deleting line {0} in {1}"
 msgstr "Borrando línea {0} en {1}"
+
+#, python-brace-format
+msgid "Killing all process that contain '{0}' in ps aux."
+msgstr "Matando todos los procesos que contienen '{0}' en ps aux."
+
+#, python-brace-format
+msgid "Found {0}. Killed {1}"
+msgstr "Encontrados {0}. Matados {1}"
 
 msgid "You must create repository path"
 msgstr "Debe crear el directory del repositorio"
@@ -152,5 +160,3 @@ msgstr "El repositorio ya está creado en {}"
 msgid "Reading repository from {0} and listing available preprod scripts"
 msgstr ""
 
-#~ msgid "You need to set project and action parameters"
-#~ msgstr "Necesitas establecer los parámatros del proyecto y de la acción"

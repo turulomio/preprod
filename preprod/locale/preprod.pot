@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-29 09:16+0200\n"
+"POT-Creation-Date: 2024-07-03 09:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,15 +37,15 @@ msgid "Appending text at the end of {0}"
 msgstr ""
 
 #, python-brace-format
-msgid "Running with user '{0}' and system '{1}'"
+msgid "Running '{0}' as user '{1}' with system command"
+msgstr ""
+
+#, python-brace-format
+msgid "Running '{0}' with system command"
 msgstr ""
 
 #, python-brace-format
 msgid "Running '{0}' as user '{1}'"
-msgstr ""
-
-#, python-brace-format
-msgid "Running with system '{0}'"
 msgstr ""
 
 #, python-brace-format
@@ -80,6 +80,14 @@ msgstr ""
 
 #, python-brace-format
 msgid "Deleting line {0} in {1}"
+msgstr ""
+
+#, python-brace-format
+msgid "Killing all process that contain '{0}' in ps aux."
+msgstr ""
+
+#, python-brace-format
+msgid "Found {0}. Killed {1}"
 msgstr ""
 
 msgid "You must create repository path"
