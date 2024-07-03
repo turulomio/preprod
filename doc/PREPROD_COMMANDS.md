@@ -81,6 +81,9 @@ FUNCTIONS
     is_root()
         Returns if current user is root
 
+    kill_from_ps_aux(pattern, description='')
+        Searchs a case sensitive pattern in ps aux command. It will kill all process with this pattern throug its pid using kill command
+
     lines_at_the_end_of_file(filename, s, description='')
                 Appends a string (for lines append
         ) to the end of the file
@@ -194,7 +197,7 @@ DATA
     t = <gettext.GNUTranslations object>
 
 FILE
-    /home/keko/Proyectos/preprod/preprod/commons.py
+    /home/worky/Proyectos/preprod/preprod/commons.py
 
 
 

@@ -58,6 +58,10 @@ You can see all preprod_commons method  [here](doc/PREPROD_COMMANDS.md)
 
 ## Changelog
 
+### 1.1.0 (2024-07-03)
+- Running system with other user changes before to current working directory
+- Added kill_from_ps_aux method
+
 ### 1.0.1 (2024-06-29)
 - run_and_check allows to add user and password parameters
 - system allows to add user parameter

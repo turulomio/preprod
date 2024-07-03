@@ -388,7 +388,7 @@ def kill_from_ps_aux(pattern, description=""):
     """
         Searchs a case sensitive pattern in ps aux command. It will kill all process with this pattern throug its pid using kill command
     """
-    description=_("killing all process that contain '{0}' in ps aux.").format(pattern) if description=="" else description
+    description=_("Killing all process that contain '{0}' in ps aux.").format(pattern) if description=="" else description
     print_before(description, description is not None)
 
     r=run("ps aux",  shell=True,  capture_output=True)
