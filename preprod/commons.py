@@ -70,7 +70,7 @@ def makedirs(dirname, description=""):
     
 
 
-def nmcli_net_change(netname, check_host,  check_port, description=""):
+def nmcli_net_change(netname, check_host,  check_port, socket_timeout=2, number_of_sockets=5, description=""):
     """
         Uses nmcli to change a net and waits until can connect to check_host:check_port
 
@@ -87,22 +87,23 @@ def nmcli_net_change(netname, check_host,  check_port, description=""):
     from preprod.core import concurrent_log
     concurrent_log(f"Before changing net to {netname}")
     while True:
-            run(f"nmcli connection up {netname}", shell=True,  capture_output=True)
-            for i in range(3):
-                try:
-                    with create_connection((check_host, check_port), timeout=1 ):
-                        if description is not None:
-                            print_after_ok()
-                        concurrent_log(f"After changing net to {netname}")
-                        return
-                except:
-                    if retry==1:
-                        print(" " * 12, end="")
-                        stdout.flush()
-                    s=f"[Retrying {retry}]"
-                    print("\b"*len(s)+ yellow(s),  end="")
+        run(f"nmcli connection up {netname}", shell=True,  capture_output=True)
+        for i in range(number_of_sockets):
+            try:
+                with create_connection((check_host, check_port), timeout=socket_timeout):
+                    if description is not None:
+                        print_after_ok()
+                    concurrent_log(f"After changing net to {netname}")
+                    return
+            except:
+                if retry==1:
+                    print(" " * 12, end="")
                     stdout.flush()
-                    retry+=1
+                s=f"[Retrying {retry}] " +"."*i
+                print("\b"*len(s)+ yellow(s),  end="")
+                stdout.flush()
+                concurrent_log(f"Connection exception retry {retry}. Socket {i+1}/{number_of_sockets}.")
+                retry+=1
 
 
 def replace_in_file(filename, s, r,description=""):
