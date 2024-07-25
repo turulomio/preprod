@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TooManyFiles\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-03 09:08+0200\n"
+"POT-Creation-Date: 2024-07-25 05:53+0200\n"
 "PO-Revision-Date: 2020-04-03 08:54+0200\n"
 "Last-Translator: trabajo <turulomio@yahoo.es>\n"
 "Language-Team: Spanish <kde-i18n-doc@kde.org>\n"
@@ -67,8 +67,20 @@ msgid "Changing to directory {0}"
 msgstr "Cambiando a directorio {0}"
 
 #, python-brace-format
-msgid "Cloning git repository {0}"
-msgstr "Clonando repositorio git {0}"
+msgid "Cloning git repository '{0}'"
+msgstr "Clonando el repositorio git '{0}'"
+
+#, python-brace-format
+msgid "Cloning git repository '{0}' into '{1}' directory"
+msgstr "Clonando el repositorio git '{0}' en el directorio '{1}'"
+
+#, python-brace-format
+msgid "Cloning branch '{0}' of git repository '{1}'"
+msgstr "Clonando la rama '{0}' del repositorio git '{1}'"
+
+#, python-brace-format
+msgid "Cloning branch '{0}' of git repository '{1}' into '{2}' directory"
+msgstr "Clonando la rama '{0}' del repositorio git '{1}' en el directorio '{2}'"
 
 msgid "Pulling git repository"
 msgstr "Actualizando repositorio git"
@@ -108,7 +120,7 @@ msgstr ""
 
 #, python-brace-format
 msgid "Creating file '{filename}'"
-msgstr ""
+msgstr "Creando fichero '{filename}'"
 
 msgid "Developed by Mariano Muñoz 2023-{}"
 msgstr "Desarrollado por Mariano Muñoz 2023-{}"
@@ -158,5 +170,5 @@ msgstr "El repositorio ya está creado en {}"
 
 #, python-brace-format
 msgid "Reading repository from {0} and listing available preprod scripts"
-msgstr ""
+msgstr "Leyendo el repositorio desde {0} y listando los scripts disponibles de preprod"
 
