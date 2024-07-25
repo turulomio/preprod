@@ -87,7 +87,8 @@ def nmcli_net_change(netname, check_host,  check_port, socket_timeout=2, number_
     from preprod.core import concurrent_log
     concurrent_log(f"Before changing net to {netname}")
     while True:
-        run(f"nmcli connection up {netname}", shell=True,  capture_output=True)
+        p=run(f"nmcli connection up {netname}", shell=True,  capture_output=True)
+        concurrent_log(p.returncode)
         for i in range(number_of_sockets):
             try:
                 with create_connection((check_host, check_port), timeout=socket_timeout):
@@ -290,13 +291,20 @@ def file_contains_string(file_path, search_string):
         return False
 
 
-def git_clone(url,  output_directory="", description=""):
+def git_clone(url,  output_directory="", branch=None, description=""):
     """
         Clones a git project using its url. If you need a different output directory you can set in params
     """
-
-    description=_("Cloning git repository {0}").format(url) if description=="" else description
-    run_and_check(f"git clone {url} {output_directory}", description=description)
+    branch_string="" if branch is None else f"--branch {branch}"
+    if branch is None and output_directory=="":
+        description=_("Cloning git repository '{0}'").format(url) if description=="" else description
+    elif branch is None and output_directory!="":
+        description=_("Cloning git repository '{0}' into '{1}' directory").format(url, output_directory) if description=="" else description
+    elif branch is not None and output_directory=="":
+        description=_("Cloning branch '{0}' of git repository '{1}'").format(branch,  url) if description=="" else description
+    else:
+        description=_("Cloning branch '{0}' of git repository '{1}' into '{2}' directory").format(branch,  url,  output_directory) if description=="" else description
+    run_and_check(f"git clone {branch_string} {url} {output_directory}", description=description)
 
 def git_pull(description=""):    
     """
