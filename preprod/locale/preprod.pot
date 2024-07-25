@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-03 09:09+0200\n"
+"POT-Creation-Date: 2024-07-25 05:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,7 +65,19 @@ msgid "Changing to directory {0}"
 msgstr ""
 
 #, python-brace-format
-msgid "Cloning git repository {0}"
+msgid "Cloning git repository '{0}'"
+msgstr ""
+
+#, python-brace-format
+msgid "Cloning git repository '{0}' into '{1}' directory"
+msgstr ""
+
+#, python-brace-format
+msgid "Cloning branch '{0}' of git repository '{1}'"
+msgstr ""
+
+#, python-brace-format
+msgid "Cloning branch '{0}' of git repository '{1}' into '{2}' directory"
 msgstr ""
 
 msgid "Pulling git repository"

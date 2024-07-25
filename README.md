@@ -58,6 +58,10 @@ You can see all preprod_commons method  [here](doc/PREPROD_COMMANDS.md)
 
 ## Changelog
 
+### 1.2.0 (2024-07-25)
+- Added branch support to git clone command
+- Added number_of_sockets and socket_timeout parameters to nmcli_net_change command
+
 ### 1.1.0 (2024-07-03)
 - Running system with other user changes before to current working directory
 - Added kill_from_ps_aux method

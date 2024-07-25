@@ -62,7 +62,7 @@ FUNCTIONS
     getuser()
         Returns a string with current user
 
-    git_clone(url, output_directory='', description='')
+    git_clone(url, output_directory='', branch=None, description='')
         Clones a git project using its url. If you need a different output directory you can set in params
 
     git_pull(description='')
@@ -105,7 +105,7 @@ FUNCTIONS
     makedirs(dirname, description='')
         Create directories to last child. If it's already created ignores error
 
-    nmcli_net_change(netname, check_host, check_port, description='')
+    nmcli_net_change(netname, check_host, check_port, socket_timeout=2, number_of_sockets=5, description='')
         Uses nmcli to change a net and waits until can connect to check_host:check_port
 
         Parameters:
@@ -197,7 +197,7 @@ DATA
     t = <gettext.GNUTranslations object>
 
 FILE
-    /home/worky/Proyectos/preprod/preprod/commons.py
+    /home/keko/Proyectos/preprod/preprod/commons.py
 
 
 

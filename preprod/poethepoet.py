@@ -10,7 +10,7 @@ def release():
   * git checkout -b preprod-{0}
   * poe doc
   * poe translate
-  * linguist
+  * nano preprod/locale/es.po
   * poe translate
   * poe coverage
   * git commit -a -m 'preprod-{0}'
