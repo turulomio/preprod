@@ -63,8 +63,8 @@ preprod_commons.rmtree("to_delete")
 def test_commons_nmcli_net_change():
     pass
 #    create_and_run_action(currentframe().f_code.co_name,  """
-#preprod_commons.nmcli_net_change("Ethernet", "www.gentoo.com",80)
 #preprod_commons.nmcli_net_change("Edfdthernet", "www.ddlaskdfla.com",80)
+#preprod_commons.nmcli_net_change("Ethernet", "www.gentoo.com",80)
 #preprod_commons.nmcli_net_change("Ethernet", "www.ddlaskdfla.com",80)
 #    """)
 #    assert False

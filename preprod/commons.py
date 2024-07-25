@@ -3,7 +3,6 @@ from getpass import getuser as getpass_getuser
 from gettext import translation
 from importlib.resources import files
 from os import getuid, path, listdir, remove, chdir as os_chdir, system  as os_system, makedirs as os_makedirs, getcwd
-from pydicts import casts
 from shutil import copyfile as shutil_copyfile, rmtree as shutil_rmtree
 from socket import create_connection
 from subprocess import run, Popen, PIPE
@@ -96,7 +95,7 @@ def nmcli_net_change(netname, check_host,  check_port, socket_timeout=2, number_
         p=run(command, shell=True,  capture_output=True)
         concurrent_log(command+f" (retry {retry})")
         if p.returncode==10:
-            concurrent_log(f"Changing connection throwed {p.returncode} return code ({casts.bytes2str(p.stderr)})")
+            concurrent_log(f"Changing connection throwed {p.returncode} return code ({p.stderr.decode('utf-8')})")
             print_after_error()
             return
             
