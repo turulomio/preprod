@@ -60,14 +60,31 @@ preprod_commons.rmtree("to_delete")
     """)
     assert not path.exists(f"{tmp_test_path}/to_delete/")
     
+def test_commons_nmcli_net_change():
+    pass
+#    create_and_run_action(currentframe().f_code.co_name,  """
+#preprod_commons.nmcli_net_change("Edfdthernet", "www.ddlaskdfla.com",80)
+#preprod_commons.nmcli_net_change("Ethernet", "www.gentoo.com",80)
+#preprod_commons.nmcli_net_change("Ethernet", "www.ddlaskdfla.com",80)
+#    """)
+#    assert False
+
+    
+    
+    
     
 def test_commons_git_clone():
     tmp_test_path=create_and_run_action(currentframe().f_code.co_name,  """
+    
 preprod_commons.git_clone("https://github.com/turulomio/preprod")
 preprod_commons.git_clone("https://github.com/turulomio/preprod", "preprod2")
+preprod_commons.git_clone("https://github.com/turulomio/preprod", "preprod3", "main")
+preprod_commons.git_clone("https://github.com/turulomio/pydicts", "", "main")
     """)
     assert path.exists(f"{tmp_test_path}/preprod/.git/")
-    assert path.exists(f"{tmp_test_path}/preprod2/.git/")    
+    assert path.exists(f"{tmp_test_path}/preprod2/.git/")
+    assert path.exists(f"{tmp_test_path}/preprod3/.git/")
+    assert path.exists(f"{tmp_test_path}/pydicts/.git/")
     
 def test_commons_git_pull():
     create_and_run_action(currentframe().f_code.co_name,  """

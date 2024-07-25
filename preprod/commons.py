@@ -83,11 +83,22 @@ def nmcli_net_change(netname, check_host,  check_port, socket_timeout=2, number_
     if description is not None:
         print_before(_("Changing net to {0}").format(netname) )
     
-    retry=1
     from preprod.core import concurrent_log
     concurrent_log(f"Before changing net to {netname}")
+    
+    retry=1
+    
+    last_string_length=10#len(yellow("[Retrying 1] ."))
+    
     while True:
-        run(f"nmcli connection up {netname}", shell=True,  capture_output=True)
+        command=f"nmcli connection up {netname}"
+        p=run(command, shell=True,  capture_output=True)
+        concurrent_log(command+f" (retry {retry})")
+        if p.returncode==10:
+            concurrent_log(f"Changing connection throwed {p.returncode} return code ({p.stderr.decode('utf-8')})")
+            print_after_error()
+            return
+            
         for i in range(number_of_sockets):
             try:
                 with create_connection((check_host, check_port), timeout=socket_timeout):
@@ -96,14 +107,16 @@ def nmcli_net_change(netname, check_host,  check_port, socket_timeout=2, number_
                     concurrent_log(f"After changing net to {netname}")
                     return
             except:
-                if retry==1:
-                    print(" " * 12, end="")
+                if retry==1 and i==0:
+                    print(" " *last_string_length, end="")
                     stdout.flush()
-                s=f"[Retrying {retry}] " +"."*i
-                print("\b"*len(s)+ yellow(s),  end="")
+                    
+                s=f"[Retrying {retry}] " +"."*(i+1)
+                print("\b"*last_string_length + yellow(s),  end="")
                 stdout.flush()
+                last_string_length=len(s)
                 concurrent_log(f"Connection exception retry {retry}. Socket {i+1}/{number_of_sockets}.")
-                retry+=1
+        retry+=1
 
 
 def replace_in_file(filename, s, r,description=""):
@@ -290,13 +303,20 @@ def file_contains_string(file_path, search_string):
         return False
 
 
-def git_clone(url,  output_directory="", description=""):
+def git_clone(url,  output_directory="", branch=None, description=""):
     """
         Clones a git project using its url. If you need a different output directory you can set in params
     """
-
-    description=_("Cloning git repository {0}").format(url) if description=="" else description
-    run_and_check(f"git clone {url} {output_directory}", description=description)
+    branch_string="" if branch is None else f"--branch {branch}"
+    if branch is None and output_directory=="":
+        description=_("Cloning git repository '{0}'").format(url) if description=="" else description
+    elif branch is None and output_directory!="":
+        description=_("Cloning git repository '{0}' into '{1}' directory").format(url, output_directory) if description=="" else description
+    elif branch is not None and output_directory=="":
+        description=_("Cloning branch '{0}' of git repository '{1}'").format(branch,  url) if description=="" else description
+    else:
+        description=_("Cloning branch '{0}' of git repository '{1}' into '{2}' directory").format(branch,  url,  output_directory) if description=="" else description
+    run_and_check(f"git clone {branch_string} {url} {output_directory}", description=description)
 
 def git_pull(description=""):    
     """
