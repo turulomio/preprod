@@ -3,6 +3,7 @@ from getpass import getuser as getpass_getuser
 from gettext import translation
 from importlib.resources import files
 from os import getuid, path, listdir, remove, chdir as os_chdir, system  as os_system, makedirs as os_makedirs, getcwd
+from pydicts import casts
 from shutil import copyfile as shutil_copyfile, rmtree as shutil_rmtree
 from socket import create_connection
 from subprocess import run, Popen, PIPE
@@ -83,12 +84,22 @@ def nmcli_net_change(netname, check_host,  check_port, socket_timeout=2, number_
     if description is not None:
         print_before(_("Changing net to {0}").format(netname) )
     
-    retry=1
     from preprod.core import concurrent_log
     concurrent_log(f"Before changing net to {netname}")
+    
+    retry=1
+    
+    last_string_length=10#len(yellow("[Retrying 1] ."))
+    
     while True:
-        p=run(f"nmcli connection up {netname}", shell=True,  capture_output=True)
-        concurrent_log(p.returncode)
+        command=f"nmcli connection up {netname}"
+        p=run(command, shell=True,  capture_output=True)
+        concurrent_log(command+f" (retry {retry})")
+        if p.returncode==10:
+            concurrent_log(f"Changing connection throwed {p.returncode} return code ({casts.bytes2str(p.stderr)})")
+            print_after_error()
+            return
+            
         for i in range(number_of_sockets):
             try:
                 with create_connection((check_host, check_port), timeout=socket_timeout):
@@ -97,14 +108,16 @@ def nmcli_net_change(netname, check_host,  check_port, socket_timeout=2, number_
                     concurrent_log(f"After changing net to {netname}")
                     return
             except:
-                if retry==1:
-                    print(" " * 12, end="")
+                if retry==1 and i==0:
+                    print(" " *last_string_length, end="")
                     stdout.flush()
-                s=f"[Retrying {retry}] " +"."*i
-                print("\b"*len(s)+ yellow(s),  end="")
+                    
+                s=f"[Retrying {retry}] " +"."*(i+1)
+                print("\b"*last_string_length + yellow(s),  end="")
                 stdout.flush()
+                last_string_length=len(s)
                 concurrent_log(f"Connection exception retry {retry}. Socket {i+1}/{number_of_sockets}.")
-                retry+=1
+        retry+=1
 
 
 def replace_in_file(filename, s, r,description=""):
