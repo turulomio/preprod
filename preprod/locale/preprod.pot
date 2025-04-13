@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-25 05:57+0200\n"
+"POT-Creation-Date: 2025-04-13 10:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -114,10 +114,6 @@ msgstr ""
 
 #, python-brace-format
 msgid "Changing directories permissions to {0} and files to {1}"
-msgstr ""
-
-#, python-brace-format
-msgid "Creating file '{filename}'"
 msgstr ""
 
 msgid "Developed by Mariano Muñoz 2023-{}"

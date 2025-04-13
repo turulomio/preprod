@@ -1,6 +1,6 @@
 [project]
 name = "preprod"
-version = "1.2.0dev"
+version = "1.3.0"
 description = "Easily creation of pre-production and production scripts to automete your deployment"
 authors = [
     {name = "turulomio",email = "turulomio@yahoo.es"}

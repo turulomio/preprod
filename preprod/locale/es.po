@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TooManyFiles\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-25 05:53+0200\n"
+"POT-Creation-Date: 2025-04-13 10:04+0200\n"
 "PO-Revision-Date: 2020-04-03 08:54+0200\n"
 "Last-Translator: trabajo <turulomio@yahoo.es>\n"
 "Language-Team: Spanish <kde-i18n-doc@kde.org>\n"
@@ -118,10 +118,6 @@ msgstr "Cambiando '{0}' a propietario {1}:{2}"
 msgid "Changing directories permissions to {0} and files to {1}"
 msgstr ""
 
-#, python-brace-format
-msgid "Creating file '{filename}'"
-msgstr "Creando fichero '{filename}'"
-
 msgid "Developed by Mariano Muñoz 2023-{}"
 msgstr "Desarrollado por Mariano Muñoz 2023-{}"
 
@@ -172,3 +168,6 @@ msgstr "El repositorio ya está creado en {}"
 msgid "Reading repository from {0} and listing available preprod scripts"
 msgstr "Leyendo el repositorio desde {0} y listando los scripts disponibles de preprod"
 
+#, python-brace-format
+#~ msgid "Creating file '{filename}'"
+#~ msgstr "Creando fichero '{filename}'"
