@@ -1,29 +1,38 @@
-[tool.poetry]
+[project]
 name = "preprod"
-version = "1.2.0"
+version = "1.2.0dev"
 description = "Easily creation of pre-production and production scripts to automete your deployment"
-authors = ["turulomio <turulomio@yahoo.es>"]
-license = "GPL-3"
+authors = [
+    {name = "turulomio",email = "turulomio@yahoo.es"}
+]
+license = {text = "GPL-3.0-only"}
 readme = "README.md"
+requires-python = ">=3.11,<4.0.0"
+dependencies = [
+    "colorama (>=0.4.6,<0.5.0)"
+]
 
-[tool.poetry.dependencies]
-python = ">=3.11,<4"
-colorama = ">=0.4.6"
+[tool.poetry]
 
 [tool.poetry.group.dev.dependencies]
-poetry = ">=1.8.3"
-poethepoet = ">=0.27.0"
+poetry = "^2.1.2"
+poethepoet = "^0.33.1"
 pytest = ">=8.3.1"
 coverage = ">=7.6.0"
 
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
+[project.urls]
+homepage = "https://github.com/turulomio/preprod/"
+repository = "https://github.com/turulomio/preprod/"
+changelog = "https://github.com/turulomio/preprod#changelog"
 
 [tool.poetry.scripts]
 preprod='preprod.core:main'
 preprod_create_repository='preprod.core:create'
+
 
 [tool.poe.tasks]
 coverage = { script = "preprod.poethepoet:coverage" }
