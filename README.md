@@ -58,6 +58,9 @@ You can see all preprod_commons method  [here](doc/PREPROD_COMMANDS.md)
 
 ## Changelog
 
+### 1.3.0 (2025-03-13)
+- Migrated to poetry>2.0.0
+
 ### 1.2.0 (2024-07-25)
 - Added branch support to git clone command
 - Added number_of_sockets and socket_timeout parameters to nmcli_net_change command
