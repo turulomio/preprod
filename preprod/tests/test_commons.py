@@ -43,16 +43,19 @@ preprod_commons.chdir("{tmp_test_path}")
     
 def test_commons_create_python_virtual_env():
     tmp_test_path=create_and_run_action(currentframe().f_code.co_name,  """
-preprod_commons.create_python_virtual_env(python_version_name="python3.11", system_site_packages=False)
-preprod_commons.create_python_virtual_env(python_version_name="python3.12", system_site_packages=True)
+preprod_commons.create_python_virtual_env(python_version_name="python3", system_site_packages=False)
+preprod_commons.create_python_virtual_env(python_version_name="python", system_site_packages=True)
+preprod_commons.create_python_virtual_env(python_version_name="python3", system_site_packages=False, env_name="pythonic")
     """)
-    if which("python3.11"):
-        assert path.exists(f"{tmp_test_path}/.python3.11/bin/python3.11")
-        assert commons.file_contains_string(f"{tmp_test_path}/.python3.11/pyvenv.cfg",  "include-system-site-packages = false")
-    if which("python3.12"):
-        assert path.exists(f"{tmp_test_path}/.python3.12/bin/python3.12")
-        assert commons.file_contains_string(f"{tmp_test_path}/.python3.12/pyvenv.cfg",  "include-system-site-packages = true")
-    
+    assert path.exists(f"{tmp_test_path}/.python3/bin/")
+    assert commons.file_contains_string(f"{tmp_test_path}/.python3/pyvenv.cfg",  "include-system-site-packages = false")
+
+    assert path.exists(f"{tmp_test_path}/.python/bin/")
+    assert commons.file_contains_string(f"{tmp_test_path}/.python/pyvenv.cfg",  "include-system-site-packages = true")
+
+    assert path.exists(f"{tmp_test_path}/pythonic/bin/")
+    assert commons.file_contains_string(f"{tmp_test_path}/pythonic/pyvenv.cfg",  "include-system-site-packages = false")
+
 def test_commons_rmtree():
     tmp_test_path=create_and_run_action(currentframe().f_code.co_name,  """
 preprod_commons.makedirs("to_delete")
