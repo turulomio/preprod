@@ -474,15 +474,18 @@ def dictionary_project_actions():
             r[file_project].append(file_action)
     return r
 
-def create_python_virtual_env(python_version_name="python3.11", system_site_packages=False):
+def create_python_virtual_env(python_version_name="python3", system_site_packages=False, env_name=None):
     """
         Will create a python virtual env in .python_version_name with python_version_name executable
         Parameters:
            - python_version_name: str: python3.11
+           - system_site_packages: boolean: False
+           - env_name: str: None If None uses .python_version_name else directory. Must be a directory name
     """
     str_sss="--system-site-packages" if system_site_packages else ""
-    run_and_check(f"{python_version_name} -m venv {str_sss} .{python_version_name}", description= f"Creating virtual env at .{python_version_name}")
-    return path.abspath(f".{python_version_name}/bin/python3"), path.abspath(f".{python_version_name}/bin/pip")
+    env_name=f".{python_version_name}" if env_name is None else env_name
+    run_and_check(f"{python_version_name} -m venv {str_sss} {env_name}", description= f"Creating virtual env at {env_name}")
+    return path.abspath(f"{env_name}/bin/python3"), path.abspath(f"{env_name}/bin/pip")
 
 def apache_initd_restart(description=""):
     """
