@@ -534,3 +534,44 @@ def poetry_env_info():
     python_=p.stdout.decode('utf-8')[:-1]
     pip_=python_.replace("bin/python",  "bin/pip")
     return python_,  pip_
+
+def preprod(project, action, pretend=False, description=""):
+    """
+        Invokes another preprod action from within the current script.
+        Note: This function will terminate the current process if the invoked
+        preprod action encounters an error and calls sys.exit().
+
+        Parameters:
+            - project (str): The name of the project.
+            - action (str): The name of the action within the project.
+            - pretend (bool): If True, runs the action in pretend mode.
+            - description (str): Optional description for logging.
+    """
+    # Lazy import to avoid circular dependency with preprod.core
+    from preprod import core
+    from preprod.core import concurrent_log
+
+    log_message = _("Invoking preprod action '{0}' for project '{1}'").format(action, project)
+    if pretend:
+        log_message += _(" (pretend mode)")
+    
+    description = log_message if description == "" else description
+    print_before(description, description is not None)
+
+    args_list = [project, action]
+    if pretend:
+        args_list.append('--pretend')
+
+    try:
+        core.main(args_list)
+        print_after_ok(description is not None)
+        concurrent_log(log_message + _(" - Succeeded"))
+    except SystemExit as e:
+        return_code = e.code
+        print_after_error(description is not None)
+        concurrent_log(log_message + _(" - Failed with exit code {0}").format(return_code))
+        raise # Re-raise the SystemExit to ensure the process terminates as core.main intended.
+    except Exception as e:
+        print_after_error(description is not None)
+        concurrent_log(log_message + _(" - Failed with unexpected error: {0}").format(str(e)))
+        raise # Re-raise any other unexpected exception
