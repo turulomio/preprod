@@ -540,7 +540,10 @@ def preprod(project, action, pretend=False, description=""):
         Invokes another preprod action from within the current script.
         Note: This function will terminate the current process if the invoked
         preprod action encounters an error and calls sys.exit().
-
+        
+        The `SystemExit` exception is caught to allow for logging and displaying
+        an error message, but it is then re-raised to ensure the calling process
+        terminates as `preprod.core.main` intends for failed actions.
         Parameters:
             - project (str): The name of the project.
             - action (str): The name of the action within the project.

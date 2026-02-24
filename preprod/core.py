@@ -16,9 +16,21 @@ except:
     _=str
 
 def argparse_epilog():
-    return _("Developed by Mariano Muñoz 2023-{}").format(__versiondate__.year)
+    """
+    Generates the epilog string for the argument parser, including version information.
+    """
+    return _("Developed by Mariano Muñoz {}-{}").format(__versiondate__.year, __versiondate__.year)
 
 def concurrent_log(title, stdout=None,  stderr=None):
+    """
+    Logs messages concurrently to a project-specific log file in /tmp/.
+    Includes timestamps, project/action context, and optional stdout/stderr.
+
+    Parameters:
+        - title (str): The main log message.
+        - stdout (str, optional): Standard output to log.
+        - stderr (str, optional): Standard error to log.
+    """
     def parse_std(std):
         arr=std.split("\n")
         r=""
@@ -106,6 +118,12 @@ import repository_commons
 
 
 def create():
+    """
+    Initializes a new preprod repository.
+
+    Creates the necessary directory structure and a sample project/action
+    along with a `repository_commons.py` file.
+    """
 
     parser=ArgumentParser(description=_("Preprod manager"), epilog= argparse_epilog())
     parser.add_argument('--version', action='version', version=__version__)
@@ -135,6 +153,11 @@ repository_commons.foo()
 """)
 
 def list_repository():
+    """
+    Lists all available preprod projects and their actions in the repository.
+
+    Prints a formatted output of the discovered projects and actions.
+    """
     commons.check_repository_path(verbose=True)
     rp=commons.repository_path()
     print(commons.yellow(_("Reading repository from {0} and listing available preprod scripts").format(rp)))
