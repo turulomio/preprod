@@ -194,6 +194,17 @@ preprod_commons.chdir("django_calories_tracker")
 preprod_commons.poetry_install()
     """)
 
+def test_commons_create_file():
+    tmp_test_path = create_and_run_action(currentframe().f_code.co_name, """
+preprod_commons.create_file("test_file.txt", "Hello, world!")
+preprod_commons.create_file("empty_file.txt", "")
+    """)
+    assert path.exists(f"{tmp_test_path}/test_file.txt")
+    assert commons.file_contains_string(f"{tmp_test_path}/test_file.txt", "Hello, world!")
+    assert path.exists(f"{tmp_test_path}/empty_file.txt")
+    with open(f"{tmp_test_path}/empty_file.txt", "r") as f:
+        assert f.read() == ""
+
 def test_commons_npm_install():
     tmp_test_path=create_and_run_action(currentframe().f_code.co_name,  """
 preprod_commons.git_clone("https://github.com/turulomio/calories_tracker")

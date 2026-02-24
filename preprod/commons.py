@@ -578,3 +578,13 @@ def preprod(project, action, pretend=False, description=""):
         print_after_error(description is not None)
         concurrent_log(log_message + _(" - Failed with unexpected error: {0}").format(str(e)))
         raise # Re-raise any other unexpected exception
+
+def create_file(filename, content="", description=""):
+    """
+    Creates a file with the given filename and content.
+    """
+    description = _("Creating file '{0}'").format(filename) if description == "" else description
+    print_before(description, description is not None)
+    with open(filename, "w") as f:
+        f.write(content)
+    print_after_ok(description is not None)
