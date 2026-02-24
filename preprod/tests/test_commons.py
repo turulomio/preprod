@@ -1,6 +1,6 @@
 from inspect import currentframe
 from preprod import commons, core
-from os import system, path
+from os import system, path,remove
 from pytest import raises, fixture
 from shutil import which
 
@@ -12,6 +12,7 @@ tmp_path="/tmp/preprod_tests"
 def setup_and_teardown():
     # Code to run at the beginning
     print("Creating preprod test project!")
+    
     system(f"rm -Rf {tmp_path}")
     system(f"mkdir -p {project_test_path}")
     # Anything you need to initialize
@@ -202,6 +203,25 @@ preprod_commons.npm_install()
     assert path.exists(f"{tmp_test_path}/calories_tracker/node_modules/")
 
     
+def test_commons_preprod():
+    # Create new action  to test from preprod   
+    tmp_test_path = create_and_run_action("testing_preprod_command", """
+preprod_commons.system("touch testing_preprod_command.txt")
+    """)
+    assert path.exists(f"testing_preprod_command.txt")
+    remove("testing_preprod_command.txt")
+    assert not path.exists(f"testing_preprod_command.txt")
+    
+
+    # Call create_command remove command
+    tmp_test_path = create_and_run_action("preprod_remove_testing_preprod_command", """
+preprod_commons.preprod("test", "testing_preprod_command")
+    """)
+    assert path.exists("testing_preprod_command.txt")
+    remove("testing_preprod_command.txt")
+    assert not path.exists(f"testing_preprod_command.txt")
+
+
 def test_list():
     with raises(SystemExit):
         core.main([])
