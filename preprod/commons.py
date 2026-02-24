@@ -6,6 +6,7 @@ from os import getuid, path, listdir, remove, chdir as os_chdir, system  as os_s
 from shutil import copyfile as shutil_copyfile, rmtree as shutil_rmtree
 from socket import create_connection
 from subprocess import run, Popen, PIPE
+from time import sleep as time_sleep
 from sys import exit, stdout
 
 """
@@ -534,3 +535,65 @@ def poetry_env_info():
     python_=p.stdout.decode('utf-8')[:-1]
     pip_=python_.replace("bin/python",  "bin/pip")
     return python_,  pip_
+
+def preprod(project, action, pretend=False, description=""):
+    """
+        Invokes another preprod action from within the current script.
+        Note: This function will terminate the current process if the invoked
+        preprod action encounters an error and calls sys.exit().
+        
+        The `SystemExit` exception is caught to allow for logging and displaying
+        an error message, but it is then re-raised to ensure the calling process
+        terminates as `preprod.core.main` intends for failed actions.
+        Parameters:
+            - project (str): The name of the project.
+            - action (str): The name of the action within the project.
+            - pretend (bool): If True, runs the action in pretend mode.
+            - description (str): Optional description for logging.
+    """
+    # Lazy import to avoid circular dependency with preprod.core
+    from preprod import core
+    from preprod.core import concurrent_log
+
+    log_message = _("Invoking preprod action '{0}' for project '{1}'").format(action, project)
+    if pretend:
+        log_message += _(" (pretend mode)")
+    
+    description = log_message if description == "" else description
+    print_before(description, description is not None)
+
+    args_list = [project, action]
+    if pretend:
+        args_list.append('--pretend')
+
+    try:
+        core.main(args_list)
+        print_after_ok(description is not None)
+        concurrent_log(log_message + _(" - Succeeded"))
+    except SystemExit as e:
+        return_code = e.code
+        print_after_error(description is not None)
+        concurrent_log(log_message + _(" - Failed with exit code {0}").format(return_code))
+        raise # Re-raise the SystemExit to ensure the process terminates as core.main intended.
+    except Exception as e:
+        concurrent_log(log_message + _(" - Failed with unexpected error: {0}").format(str(e)))
+        raise # Re-raise any other unexpected exception
+
+def sleep(seconds, description=""):
+    """
+    Pauses the execution for a given number of seconds.
+    """
+    description = _("Sleeping for {0} seconds").format(seconds) if description == "" else description
+    print_before(description, description is not None)
+    time_sleep(seconds)
+    print_after_ok(description is not None)
+
+def create_file(filename, content="", description=""):
+    """
+    Creates a file with the given filename and content.
+    """
+    description = _("Creating file '{0}'").format(filename) if description == "" else description
+    print_before(description, description is not None)
+    with open(filename, "w") as f:
+        f.write(content)
+    print_after_ok(description is not None)

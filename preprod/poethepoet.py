@@ -2,6 +2,9 @@ from preprod import __version__
 from os import system
 
 def release():
+    """
+    Provides instructions for creating a new release of the preprod project.
+    """
     print("""Nueva versión:
   * Cambiar la version en pyproject.toml
   * Cambiar la versión y la fecha en __init__.py
@@ -28,10 +31,17 @@ def release():
 
     
 def coverage():
+    """
+    Runs pytest with coverage and generates a coverage report and HTML output.
+    """
     system("coverage run --omit='*repository_commons.py' -m pytest && coverage report && coverage html")
 
 
 def translate():
+    """
+    Manages translation files for the project.
+    Extracts translatable strings, updates PO files, and compiles MO files.
+    """
     #es
     system("xgettext -L Python --no-wrap --no-location --from-code='UTF-8' -o preprod/locale/preprod.pot preprod/*.py")
     system("msgmerge -N --no-wrap -U preprod/locale/es.po preprod/locale/preprod.pot")
@@ -39,9 +49,16 @@ def translate():
     system("msgfmt -cv -o preprod/locale/en/LC_MESSAGES/preprod.mo preprod/locale/en.po")
     
 def pytest():
+    """
+    Runs the pytest test suite for the project.
+    """
     system("pytest")
 
 def doc():
+    """
+    Generates documentation for preprod.commons module in Markdown format.
+    Captures the output of `help(preprod.commons)` and saves it to `doc/PREPROD_COMMANDS.md`.
+    """
     import io
     import sys
     import preprod.commons

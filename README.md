@@ -55,49 +55,7 @@ I hope you like it and give me a star.
 
 You can see all preprod_commons method  [here](doc/PREPROD_COMMANDS.md)
 
-
-## Changelog
-
-### 1.3.0 (2025-03-13)
-- Migrated to poetry>2.0.0
-
-### 1.2.0 (2024-07-25)
-- Added branch support to git clone command
-- Added number_of_sockets and socket_timeout parameters to nmcli_net_change command
-
-### 1.1.0 (2024-07-03)
-- Running system with other user changes before to current working directory
-- Added kill_from_ps_aux method
-
-### 1.0.1 (2024-06-29)
-- run_and_check allows to add user and password parameters
-- system allows to add user parameter
-
-### 0.6.0 (2024-06-23)
-- Solved problem creating python virtual environment
-- Improving tests procedure. Coverage is now 85% (#42)
-
-### 0.5.0 (2024-06-17)
-- Added getuser, rm, create_a_file commands
-- Improved preprod parameters experience
-- poetry_env_info now returns a tuple with the virtual env python executable and pip executable
-
-### 0.4.0 (2024-06-08)
-- Temporal preprod logs are now created by each user to avoid permissions problems
-- Added examples and documentation
-- Added poe doc command
-- Improved parameters errors
-
-### 0.3.0 (2024-05-28)
-- Improved description system
-- Added makedirs and git clone in different directory
-- Improved spanish translations
-- Added --version to commands
-- Added test with a 84% coverture
-
-### 0.2.0 (2024-05-26)
-- Added logs in /tmp/preprod_logs/
-- Added chown_recursive, chmod_recursive, rsync, poetry_install, poetry_env_info methods to commons
-
-### 0.1.0 (2024-05-21)
-- Basic functionality
+Additionally, you can invoke other preprod actions from within your scripts using:
+```python
+preprod_commons.preprod("project_name", "action_name", pretend=False, description="Optional description")
+```
