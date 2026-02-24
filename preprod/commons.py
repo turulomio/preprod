@@ -6,6 +6,7 @@ from os import getuid, path, listdir, remove, chdir as os_chdir, system  as os_s
 from shutil import copyfile as shutil_copyfile, rmtree as shutil_rmtree
 from socket import create_connection
 from subprocess import run, Popen, PIPE
+from time import sleep as time_sleep
 from sys import exit, stdout
 
 """
@@ -575,9 +576,17 @@ def preprod(project, action, pretend=False, description=""):
         concurrent_log(log_message + _(" - Failed with exit code {0}").format(return_code))
         raise # Re-raise the SystemExit to ensure the process terminates as core.main intended.
     except Exception as e:
-        print_after_error(description is not None)
         concurrent_log(log_message + _(" - Failed with unexpected error: {0}").format(str(e)))
         raise # Re-raise any other unexpected exception
+
+def sleep(seconds, description=""):
+    """
+    Pauses the execution for a given number of seconds.
+    """
+    description = _("Sleeping for {0} seconds").format(seconds) if description == "" else description
+    print_before(description, description is not None)
+    time_sleep(seconds)
+    print_after_ok(description is not None)
 
 def create_file(filename, content="", description=""):
     """
