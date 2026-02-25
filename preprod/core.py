@@ -3,11 +3,12 @@ from datetime import datetime
 from gettext import translation
 from importlib.resources import files
 from multiprocessing import Lock
-from os import path, makedirs
-from preprod import commons
+from os import path, makedirs, system
+from . import commons, __version__, __versiondate__
 from sys import exit
-from preprod import __version__, __versiondate__
 from getpass import getuser
+from os import environ # For EDITOR environment variable
+from shutil import which # For checking editor availability
 
 try:
     t=translation('preprod', files("preprod") / 'locale')
@@ -15,11 +16,6 @@ try:
 except:
     _=str
 
-def argparse_epilog():
-    """
-    Generates the epilog string for the argument parser, including version information.
-    """
-    return _("Developed by Mariano Muñoz {}-{}").format(__versiondate__.year, __versiondate__.year)
 
 def concurrent_log(title, stdout=None,  stderr=None):
     """
@@ -57,9 +53,10 @@ def main(arguments=None):
     lock=Lock()
     
     global args
-    parser=ArgumentParser(description=_("Preprod manager"), epilog= argparse_epilog())
+    parser=ArgumentParser(description=_("Preprod manager"), epilog= commons.epilog()) # Corrected epilog call
     parser.add_argument('--version', action='version', version=__version__)
     parser.add_argument('--pretend', default=False, help=_("Prints action code without running it"),  action='store_true')
+    parser.add_argument('--edit', default=False, help=_("Opens the action file in the default console editor"), action='store_true')
 
     parser.add_argument('project', nargs='?', default=None, help=_("Project identification"),  action='store')
     parser.add_argument('action', nargs='?', default=None, help=_("Action identification"),  action='store')
@@ -93,6 +90,19 @@ def main(arguments=None):
         print(commons.red(_("Project '{0}' hasn't '{1}' action. Found actions: {2}").format(args.project,  args.action, commons.green(str(dpa[args.project])))))
         exit(4)
         
+    if args.edit:
+        editor_command = environ.get('EDITOR')
+        if not editor_command:
+            if which('mcedit'):
+                editor_command = 'mcedit'
+            elif which('nano'):
+                editor_command = 'nano'
+            else:
+                editor_command = 'vi' # Fallback to vi if no other editor found or EDITOR env var not set
+
+        system(f"{editor_command} {action_path}")
+        exit(0) # Exit after editing
+
     if args.project is not None and args.action is not None:
         start=datetime.now()
         with open(action_path) as f:
@@ -124,8 +134,7 @@ def create():
     Creates the necessary directory structure and a sample project/action
     along with a `repository_commons.py` file.
     """
-
-    parser=ArgumentParser(description=_("Preprod manager"), epilog= argparse_epilog())
+    parser=ArgumentParser(description=_("Preprod manager"), epilog= commons.epilog()) # Corrected epilog call
     parser.add_argument('--version', action='version', version=__version__)
     parser.parse_args()
     
