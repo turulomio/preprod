@@ -8,6 +8,10 @@ from socket import create_connection
 from subprocess import run, Popen, PIPE
 from time import sleep as time_sleep
 from sys import exit, stdout
+from .version import __version__, __versiondate__
+
+
+
 
 """
     Each command should have these parameters
@@ -22,6 +26,11 @@ try:
 except:
     _=str
 
+def epilog():
+    """
+    Generates the epilog string for the argument parser, including version information.
+    """
+    return _("Developed by Mariano Muñoz {}-{}").format(__versiondate__.year, __versiondate__.year)
 
 
 def red(s):
