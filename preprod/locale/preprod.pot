@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-13 10:04+0200\n"
+"POT-Creation-Date: 2026-02-26 08:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+msgid "Developed by Mariano Muñoz {}-{}"
+msgstr ""
 
 msgid "Press a key to continue..."
 msgstr ""
@@ -116,13 +119,39 @@ msgstr ""
 msgid "Changing directories permissions to {0} and files to {1}"
 msgstr ""
 
-msgid "Developed by Mariano Muñoz 2023-{}"
+#, python-brace-format
+msgid "Invoking preprod action '{0}' for project '{1}'"
+msgstr ""
+
+msgid " (pretend mode)"
+msgstr ""
+
+msgid " - Succeeded"
+msgstr ""
+
+#, python-brace-format
+msgid " - Failed with exit code {0}"
+msgstr ""
+
+#, python-brace-format
+msgid " - Failed with unexpected error: {0}"
+msgstr ""
+
+#, python-brace-format
+msgid "Sleeping for {0} seconds"
+msgstr ""
+
+#, python-brace-format
+msgid "Creating file '{0}'"
 msgstr ""
 
 msgid "Preprod manager"
 msgstr ""
 
 msgid "Prints action code without running it"
+msgstr ""
+
+msgid "Opens the action file in the default console editor"
 msgstr ""
 
 msgid "Project identification"
