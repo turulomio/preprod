@@ -32,18 +32,30 @@ def release():
     
 def coverage():
     """
-    Runs pytest with coverage and generates a coverage report and HTML output.
+    Runs the pytest test suite with code coverage analysis.
+    It generates a coverage report in the console and an HTML report
+    for detailed inspection, omitting `repository_commons.py` from coverage.
     """
     system("coverage run --omit='*repository_commons.py' -m pytest && coverage report && coverage html")
 
 
 def translate():
     """
-    Manages translation files for the project.
-    Extracts translatable strings, updates PO files, and compiles MO files.
+    Manages the translation process for the project.
+    This involves several steps:
+    1. Extracts translatable strings from Python source files into a `preprod.pot` template.
+    2. Merges new strings into existing Spanish (`es.po`) and English (`en.po`) PO files.
+    3. Compiles the updated PO files into machine-object (`.mo`) files, which are used by `gettext` at runtime.
     """
     #es
     system("xgettext -L Python --no-wrap --no-location --from-code='UTF-8' -o preprod/locale/preprod.pot preprod/*.py")
+    # `xgettext`: Extracts translatable strings from Python files.
+    #   `-L Python`: Specifies Python language.
+    #   `--no-wrap`: Prevents wrapping of long lines.
+    #   `--no-location`: Does not include source code location.
+    #   `--from-code='UTF-8'`: Specifies input encoding.
+    #   `-o preprod/locale/preprod.pot`: Output to the Portable Object Template file.
+    #   `preprod/*.py`: Specifies source files to scan.
     system("msgmerge -N --no-wrap -U preprod/locale/es.po preprod/locale/preprod.pot")
     system("msgfmt -cv -o preprod/locale/es/LC_MESSAGES/preprod.mo preprod/locale/es.po")
     system("msgfmt -cv -o preprod/locale/en/LC_MESSAGES/preprod.mo preprod/locale/en.po")
@@ -51,12 +63,18 @@ def translate():
 def pytest():
     """
     Runs the pytest test suite for the project.
+    This command executes all tests discovered by pytest in the project directory.
     """
     system("pytest")
 
 def doc():
     """
-    Generates documentation for preprod.commons module in Markdown format.
+    Generates documentation for the `preprod.commons` module and saves it to a Markdown file.
+    This function dynamically captures the output of Python's built-in `help()`
+    function for `preprod.commons`.
+    It temporarily redirects `sys.stdout` to an in-memory buffer (`io.StringIO`)
+    to capture the help text, then restores `sys.stdout` and writes the captured
+    content to `doc/PREPROD_COMMANDS.md` within a Markdown code block.
     Captures the output of `help(preprod.commons)` and saves it to `doc/PREPROD_COMMANDS.md`.
     """
     import io
