@@ -58,7 +58,6 @@ def translate():
     #   `preprod/*.py`: Specifies source files to scan.
     system("msgmerge -N --no-wrap -U preprod/locale/es.po preprod/locale/preprod.pot")
     system("msgfmt -cv -o preprod/locale/es/LC_MESSAGES/preprod.mo preprod/locale/es.po")
-    system("msgfmt -cv -o preprod/locale/en/LC_MESSAGES/preprod.mo preprod/locale/en.po")
     
 def pytest():
     """

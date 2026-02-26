@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: preprod\n"
-"Report-Msgid-Bugs-To: turulomio@yahoo.es\n"
-"POT-Creation-Date: 2026-02-26 08:16+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-26 08:23+0100\n"
 "PO-Revision-Date: 2024-07-30 10:00+0200\n"
 "Last-Translator: Mariano Muñoz <turulomio@yahoo.es>\n"
 "Language-Team: Spanish <turulomio@yahoo.es>\n"
@@ -145,7 +145,7 @@ msgstr "Durmiendo durante {0} segundos"
 
 #, python-brace-format
 msgid "Creating file '{0}'"
-msgstr "Creando fichero '{0}'
+msgstr "Creando fichero '{0}'"
 
 msgid "Preprod manager"
 msgstr "Gestor Preprod"
