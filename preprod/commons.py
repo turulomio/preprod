@@ -170,15 +170,17 @@ def nmcli_net_change(netname, check_host,  check_port, socket_timeout=2, number_
         retry+=1
 
 
-def replace_in_file(filename, s, r,description=""):
+def replace_in_file(filename, s, r, number_of_replaces=-1, description=""):
     """
-    Replaces all occurrences of a specified string `s` with another string `r`
+    Replaces all (or up to number_of_replaces) occurrences of a specified string `s` with another string `r`
     within a given file.
 
     Args:
         filename (str): The path to the file to modify.
         s (str): The string to search for and replace.
         r (str): The replacement string.
+        number_of_replaces (int, optional): The maximum number of replacements to perform.
+                                            Defaults to -1 (replace all occurrences).
         description (str, optional): A custom description for the console output.
                                      If empty, a default message is used. If None, no message is printed.
     """
@@ -186,12 +188,12 @@ def replace_in_file(filename, s, r,description=""):
     print_before(description, description is not None)
     data=open(filename,"r").read()
     remove(filename)
-    data=data.replace(s,r)
+    data=data.replace(s,r, number_of_replaces)
     with open(filename, "w") as f:
         f.write(data)
     print_after_ok(description is not None)
     from preprod.core import concurrent_log
-    concurrent_log(f"Replaced in file '{filename}', '{s}' by '{r}'")
+    concurrent_log(f"Replaced in file '{filename}', '{s}' by '{r}' (max {number_of_replaces} replacements)")
 
 def lines_at_the_end_of_file(filename, s, description=""):
     """

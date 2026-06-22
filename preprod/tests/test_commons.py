@@ -125,11 +125,13 @@ preprod_commons.chmod_recursive("hello")
     
 
 def test_commons_replace_in_file():   
-    create_and_run_action(currentframe().f_code.co_name,  """
-preprod_commons.create_a_file("hello.txt", "hello")
-preprod_commons.replace_in_file("hello.txt", "hello", "bye")
+    tmp_test_path = create_and_run_action(currentframe().f_code.co_name,  """
+preprod_commons.create_a_file("hello.txt", "hello hello hello")
+preprod_commons.replace_in_file("hello.txt", "hello", "bye", 2)
     """)
-    assert commons.file_contains_string("hello.txt",  "bye")
+    with open(f"{tmp_test_path}hello.txt", "r") as f:
+        content = f.read()
+    assert content == "bye bye hello"
     
 def test_commons_lines_at_the_end_of_file():   
     create_and_run_action(currentframe().f_code.co_name,  """
