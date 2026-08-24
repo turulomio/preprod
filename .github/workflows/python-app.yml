@@ -5,9 +5,10 @@ name: Python application
 
 on:
   push:
-    branches: [ "main", "49-github-actions-fail" ]
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  workflow_dispatch:
 
 permissions:
   contents: read
