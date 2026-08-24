@@ -199,13 +199,13 @@ FUNCTIONS
     listdir(path=None)
         Return a list containing the names of the files in the directory.
 
-        path can be specified as either str, bytes, or a path-like object.  If path is bytes,
-          the filenames returned will also be bytes; in all other circumstances
-          the filenames returned will be str.
+        path can be specified as either str, bytes, or a path-like object.  If
+        path is bytes, the filenames returned will also be bytes; in all other
+        circumstances the filenames returned will be str.
         If path is None, uses the path='.'.
-        On some platforms, path may also be specified as an open file descriptor;\
-          the file descriptor must refer to a directory.
-          If this functionality is unavailable, using it raises NotImplementedError.
+        On some platforms, path may also be specified as an open file
+        descriptor; the file descriptor must refer to a directory.  If this
+        functionality is unavailable, using it raises NotImplementedError.
 
         The list is in arbitrary order.  It does not include the special
         entries '.' and '..' even if they are present in the directory.
@@ -252,9 +252,9 @@ FUNCTIONS
     os_chdir = chdir(path)
         Change the current working directory to the specified path.
 
-        path may always be specified as a string.
-        On some platforms, path may also be specified as an open file descriptor.
-        If this functionality is unavailable, using it raises an exception.
+        path may always be specified as a string.  On some platforms, path may
+        also be specified as an open file descriptor.  If this functionality is
+        unavailable, using it raises an exception.
 
     os_system = system(command)
         Execute the command in a subshell.
@@ -323,19 +323,22 @@ FUNCTIONS
     remove(path, *, dir_fd=None)
         Remove a file (same as unlink()).
 
-        If dir_fd is not None, it should be a file descriptor open to a directory,
-          and path should be relative; path will then be relative to that directory.
+        If dir_fd is not None, it should be a file descriptor open to
+        a directory, and path should be relative; path will then be relative
+        to that directory.
         dir_fd may not be implemented on your platform.
-          If it is unavailable, using it will raise a NotImplementedError.
+        If it is unavailable, using it will raise a NotImplementedError.
 
-    replace_in_file(filename, s, r, description='')
-        Replaces all occurrences of a specified string `s` with another string `r`
+    replace_in_file(filename, s, r, number_of_replaces=-1, description='')
+        Replaces all (or up to number_of_replaces) occurrences of a specified string `s` with another string `r`
         within a given file.
 
         Args:
             filename (str): The path to the file to modify.
             s (str): The string to search for and replace.
             r (str): The replacement string.
+            number_of_replaces (int, optional): The maximum number of replacements to perform.
+                                                Defaults to -1 (replace all occurrences).
             description (str, optional): A custom description for the console output.
                                          If empty, a default message is used. If None, no message is printed.
 
@@ -445,12 +448,12 @@ DATA
     Fore = <colorama.ansi.AnsiFore object>
     PIPE = -1
     Style = <colorama.ansi.AnsiStyle object>
-    __versiondate__ = datetime.date(2026, 2, 26)
+    __versiondate__ = datetime.date(2026, 8, 24)
     stdout = <_io.TextIOWrapper name='<stdout>' mode='w' encoding='utf-8'>
     t = <gettext.GNUTranslations object>
 
 VERSION
-    1.4.0
+    1.5.0
 
 FILE
     /home/worky/Proyectos/preprod/preprod/commons.py
